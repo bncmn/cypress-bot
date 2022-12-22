@@ -11,7 +11,6 @@ module.exports = {
                 .setColor(0x0099FF)
                 .setTitle('Vancouver Visitor\'s Guide')
                 .setURL('https://tiffxo.notion.site/Vancouver-1930c79e4cf649938fb47156f9d8a06d')
-                .setAuthor({name: `${interaction.guild.name}`, iconURL: `${interaction.guild.iconURL()}`})
                 .setDescription(`Hey <@${interaction.user.id}>! Visiting Vancouver soon? Already here and don't know what to do?\n
                                 We have carefully curated a guide in order to make the most out of your stay here in Vancouver!\n
                                 The guide is (somewhat) regularly maintained, so keep checking back in for any new activities and places!\n`)

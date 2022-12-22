@@ -20,9 +20,9 @@ module.exports = {
                 .setTitle('User Information')
                 .setThumbnail(`${interaction.user.avatarURL()}`)
                 .addFields(
-					{name: 'Name', value: `${interaction.user.tag} (ID: ${interaction.user.id})`},
+					{name: 'Name', value: `\`${interaction.user.tag}\` (ID: \`${interaction.user.id}\`)`},
 					{name: 'Created', value: `<t:${convert(interaction.user.createdTimestamp)}:D> (<t:${convert(interaction.user.createdTimestamp)}:R>)`},
-					{name: `Nickname in ${interaction.guild.name}`, value: `${interaction.member.nickname}`},
+					{name: `Nickname in ${interaction.guild.name}`, value: `\`${interaction.member.nickname}\``},
 					{name: `Joined ${interaction.guild.name}`, value: `<t:${convert(interaction.member.joinedTimestamp)}:D> (<t:${convert(interaction.member.joinedTimestamp)}:R>)`},
 					{name: `Roles in ${interaction.guild.name}`, value: `${userRoles}`},
                 )
