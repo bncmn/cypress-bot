@@ -10,13 +10,13 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('roll')
         .setDescription('picks a number between two given numbers (or 1 to a maximum).')
-        .addStringOption(option => 
+        .addIntegerOption(option => 
             option
                 .setName('max')
                 .setDescription('The upper bound.')
                 .setRequired(true)
         )
-        .addStringOption(option =>
+        .addIntegerOption(option =>
             option
                 .setName('min')
                 .setDescription('The lower bound.')
@@ -25,9 +25,16 @@ module.exports = {
     async execute(interaction){
         await interaction.reply({ content: 'Rolling...', fetchReply: true });
 
-        const min = interaction.options.getString('min') ?? '1';
-        const max = interaction.options.getString('max');
+        try{
+            const min = interaction.options.getInteger('min') ?? '1';
+            const max = interaction.options.getInteger('max');
 
-		await interaction.editReply(`Rolling ${min} to ${max} resulted in ${roll(min, max)}.`);
+            await interaction.editReply(`I rolled a ${roll(min, max)}. (${min} to ${max})`);
+        } 
+        catch(err){
+            await interaction.editReply(`There was an error trying to roll. Please try again.\n\`\`\`\n${err.message}\n\`\`\``);
+            console.error(err);
+        }
+
     }
 }

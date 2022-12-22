@@ -1,5 +1,5 @@
 const { EmbedBuilder } = require('@discordjs/builders');
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, AttachmentBuilder } = require('discord.js');
 
 function convert(timestamp){
 	return Math.round(timestamp / 1000);
@@ -11,6 +11,7 @@ module.exports = {
         .setDescription('provides information about the user.'),
 
     async execute(interaction){
+        const icon = new AttachmentBuilder('./assets/icon.png');
         const userRoles = interaction.member.roles.cache
                             .map(role => `\`${role.name}\``)
                             .join(", ");
@@ -27,9 +28,8 @@ module.exports = {
 					{name: `Roles in ${interaction.guild.name}`, value: `${userRoles}`},
                 )
                 .setTimestamp()
-                .setFooter({text: 'Powered by Cypress', iconURL: 'https://cdn.discordapp.com/avatars/524785352247083029/6df9128c69fc53c37c723f8c20ec893f.webp'})
+                .setFooter({text: 'Powered by Cypress', iconURL: 'attachment://icon.png'})
 
-
-        await interaction.reply({embeds: [embed]});
+		await interaction.reply({embeds: [embed], files: [icon]});
     }
 }

@@ -1,5 +1,5 @@
 const { EmbedBuilder } = require('@discordjs/builders');
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, AttachmentBuilder } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -7,6 +7,8 @@ module.exports = {
         .setDescription('sends a link to the Vancouver Traveller\'s Guide.'),
 
     async execute(interaction){
+        const icon = new AttachmentBuilder('./assets/icon.png');
+        
         const embed = new EmbedBuilder()
                 .setColor(0x0099FF)
                 .setTitle('Vancouver Visitor\'s Guide')
@@ -19,9 +21,9 @@ module.exports = {
                 )
                 .setImage('https://i.redd.it/1df66lbrmbw31.jpg')
                 .setTimestamp()
-                .setFooter({text: 'Powered by Cypress', iconURL: 'https://cdn.discordapp.com/avatars/524785352247083029/6df9128c69fc53c37c723f8c20ec893f.webp'})
-        
-        await interaction.reply({embeds: [embed]});
+                .setFooter({text: 'Powered by Cypress', iconURL: 'attachment://icon.png'})
+
+		await interaction.reply({embeds: [embed], files: [icon]});
     }
     
 }

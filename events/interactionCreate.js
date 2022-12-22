@@ -15,9 +15,9 @@ module.exports = {
         try{
             await command.execute(interaction);
         }
-        catch(error){
-            console.error(error);
-            await interaction.reply({content: 'There was an error while executing this command. Please try again.', ephemeral: true });
+        catch(err){
+            await interaction.reply({content: `There was an error while executing this command. Please try again.\n\`\`\`\n${err.message}\n\`\`\``, ephemeral: true });
+            console.error(err);
         }
     }
 }
