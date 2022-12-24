@@ -28,9 +28,8 @@ module.exports = {
 		.setDescription('splits the people in your voice call into teams of a given number. (Default is 5)')
         .addIntegerOption(option => 
             option
-                .setName('teams')
-                .setDescription('Number of teams to make.')
-        ),
+                .setName('size')
+                .setDescription('Number of people in each team.')),
 
 	async execute(interaction){ 
         await interaction.reply({ content: 'Generating teams...', fetchReply: true });
@@ -40,13 +39,13 @@ module.exports = {
 
             const vcMembers = interaction.member.voice.channel.members
                                 .map(member => member.displayName);
-            const teams = interaction.options.getInteger('teams') ?? 5;
+            const teams = interaction.options.getInteger('size') ?? 5;
             const res = split(vcMembers, teams);
 
             const embed = new EmbedBuilder()
 				.setColor(0x0099FF)
+                .setAuthor({name: `${interaction.member.voice.channel.name}`, iconURL: `${interaction.guild.iconURL()}`})
                 .setTitle('Generated Teams')
-                .setThumbnail(`${interaction.guild.iconURL()}`)
                 .setTimestamp()
                 .setFooter({text: 'Powered by Cypress', iconURL: 'attachment://icon.png'})
             
@@ -57,7 +56,12 @@ module.exports = {
             await interaction.editReply({embeds: [embed], files: [icon]});
         }
         catch(err){
-            await interaction.editReply(`There was an error trying to generate teams. Please try again.\n\`\`\`\n${err.message}\n\`\`\``);
+            if(!interaction.member.voice.channel){
+                await interaction.editReply(`You need to be in a voice channel to use this command. Join a voice channel and try again.`);
+            }
+            else{
+                await interaction.editReply(`There was an error trying to generate teams. Please try again.\n\`\`\`\n${err.message}\n\`\`\``);
+            }
             console.error(err);
         }
     }

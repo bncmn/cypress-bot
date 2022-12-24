@@ -14,13 +14,11 @@ module.exports = {
             option
                 .setName('max')
                 .setDescription('The upper bound.')
-                .setRequired(true)
-        )
+                .setRequired(true))
         .addIntegerOption(option =>
             option
                 .setName('min')
-                .setDescription('The lower bound.')
-        ),
+                .setDescription('The lower bound.')),
 
     async execute(interaction){
         await interaction.reply({ content: 'Rolling...', fetchReply: true });
@@ -29,7 +27,12 @@ module.exports = {
             const min = interaction.options.getInteger('min') ?? '1';
             const max = interaction.options.getInteger('max');
 
-            await interaction.editReply(`I rolled a ${roll(min, max)}. (${min} to ${max})`);
+            if(min > max){
+                await interaction.editReply(`\`min\` must be less than \`max\`. Please fix your inputs and try again.`);
+            }
+            else{
+                await interaction.editReply(`I rolled ${roll(min, max)}. (${min} to ${max})`);
+            }
         } 
         catch(err){
             await interaction.editReply(`There was an error trying to roll. Please try again.\n\`\`\`\n${err.message}\n\`\`\``);
