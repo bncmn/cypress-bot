@@ -4,16 +4,14 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('echo')
 		.setDescription('broadcasts a message to a channel. (Restricted to devs only)')
-		.addStringOption(option =>
-			option
-				.setName('message')
-				.setDescription('~')
-				.setRequired(true))
-		.addChannelOption(option =>
-			option
-				.setName('channel')
-				.setDescription('~')
-				.setRequired(true)),
+		.addStringOption(option => option
+			.setName('message')
+			.setDescription('~')
+			.setRequired(true))
+		.addChannelOption(option => option
+			.setName('channel')
+			.setDescription('~')
+			.setRequired(true)),
 
 	async execute(interaction) {
 		await interaction.reply({content: 'Sending...', fetchReply: true});

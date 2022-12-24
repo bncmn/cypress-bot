@@ -9,10 +9,9 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('userinfo')
 		.setDescription('provides information about a user (Leave blank to get your own info).')
-		.addUserOption(option =>
-			option
-				.setName('user')
-				.setDescription('User to get information about.')),
+		.addUserOption(option => option
+			.setName('user')
+			.setDescription('User to get information about.')),
 
 	async execute(interaction) {
 		const icon = new AttachmentBuilder('./assets/icon.png');

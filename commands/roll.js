@@ -10,15 +10,13 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('roll')
 		.setDescription('picks a number between two given numbers (or 1 to a maximum).')
-		.addIntegerOption(option =>
-			option
-				.setName('max')
-				.setDescription('The upper bound.')
-				.setRequired(true))
-		.addIntegerOption(option =>
-			option
-				.setName('min')
-				.setDescription('The lower bound.')),
+		.addIntegerOption(option => option
+			.setName('max')
+			.setDescription('The upper bound.')
+			.setRequired(true))
+		.addIntegerOption(option => option
+			.setName('min')
+			.setDescription('The lower bound.')),
 
 	async execute(interaction) {
 		await interaction.reply({content: 'Rolling...', fetchReply: true});

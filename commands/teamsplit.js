@@ -26,10 +26,9 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('teamsplit')
 		.setDescription('splits the people in your voice call into teams of a given number (Default is 5).')
-		.addIntegerOption(option =>
-			option
-				.setName('size')
-				.setDescription('Number of people in each team.')),
+		.addIntegerOption(option => option
+			.setName('size')
+			.setDescription('Number of people in each team.')),
 
 	async execute(interaction) {
 		await interaction.reply({content: 'Generating teams...', fetchReply: true});
