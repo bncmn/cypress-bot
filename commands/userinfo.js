@@ -1,5 +1,5 @@
-const { EmbedBuilder } = require('@discordjs/builders');
-const { SlashCommandBuilder, AttachmentBuilder } = require('discord.js');
+const {EmbedBuilder} = require('@discordjs/builders');
+const {SlashCommandBuilder, AttachmentBuilder} = require('discord.js');
 
 function convert(timestamp) {
 	return Math.round(timestamp / 1000);
@@ -8,7 +8,7 @@ function convert(timestamp) {
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('userinfo')
-		.setDescription('provides information about the user.')
+		.setDescription('provides information about a user (Leave blank to get your own info).')
 		.addUserOption(option =>
 			option
 				.setName('user')
@@ -34,15 +34,15 @@ module.exports = {
 			.setTitle('User Information')
 			.setThumbnail(`${target.user.avatarURL()}`)
 			.addFields(
-				{ name: 'Name', value: `\`${target.user.tag}\` (ID: \`${target.user.id}\`)` },
-				{ name: 'Created', value: `<t:${convert(target.user.createdTimestamp)}:D> (<t:${convert(target.user.createdTimestamp)}:R>)` },
-				{ name: `Nickname in ${interaction.guild.name}`, value: `\`${target.displayName}\`` },
-				{ name: `Joined ${interaction.guild.name}`, value: `<t:${convert(target.joinedTimestamp)}:D> (<t:${convert(target.joinedTimestamp)}:R>)` },
-				{ name: `Roles in ${interaction.guild.name}`, value: `${userRoles}` },
+				{name: 'Name', value: `\`${target.user.tag}\` (ID: \`${target.user.id}\`)`},
+				{name: 'Created', value: `<t:${convert(target.user.createdTimestamp)}:D> (<t:${convert(target.user.createdTimestamp)}:R>)`},
+				{name: `Nickname in ${interaction.guild.name}`, value: `\`${target.displayName}\``},
+				{name: `Joined ${interaction.guild.name}`, value: `<t:${convert(target.joinedTimestamp)}:D> (<t:${convert(target.joinedTimestamp)}:R>)`},
+				{name: `Roles in ${interaction.guild.name}`, value: `${userRoles}`},
 			)
 			.setTimestamp()
-			.setFooter({ text: 'Powered by Cypress', iconURL: 'attachment://icon.png' });
+			.setFooter({text: 'Powered by Cypress', iconURL: 'attachment://icon.png'});
 
-		await interaction.reply({ embeds: [embed], files: [icon] });
+		await interaction.reply({embeds: [embed], files: [icon]});
 	},
 };

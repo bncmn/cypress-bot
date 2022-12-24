@@ -5,11 +5,11 @@ const path = require('node:path');
 
 // Required discord.js classes
 // eslint-disable-next-line no-unused-vars
-const { Client, Events, GatewayIntentBits, Collection } = require('discord.js');
-const { token } = require('./config.json');
+const {Client, Events, GatewayIntentBits, Collection} = require('discord.js');
+const {token} = require('./config.json');
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds,
-	GatewayIntentBits.GuildVoiceStates] });
+const client = new Client({intents: [GatewayIntentBits.Guilds,
+	GatewayIntentBits.GuildVoiceStates]});
 
 // Extends Map(); store and retrieve commands
 client.commands = new Collection();

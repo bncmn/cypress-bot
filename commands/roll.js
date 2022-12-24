@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const {SlashCommandBuilder} = require('discord.js');
 
 function roll(min, max) {
 	min = Math.ceil(min);
@@ -21,7 +21,7 @@ module.exports = {
 				.setDescription('The lower bound.')),
 
 	async execute(interaction) {
-		await interaction.reply({ content: 'Rolling...', fetchReply: true });
+		await interaction.reply({content: 'Rolling...', fetchReply: true});
 
 		try {
 			const min = interaction.options.getInteger('min') ?? '1';

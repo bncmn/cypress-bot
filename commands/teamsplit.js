@@ -1,5 +1,5 @@
-const { EmbedBuilder } = require('@discordjs/builders');
-const { SlashCommandBuilder, AttachmentBuilder } = require('discord.js');
+const {EmbedBuilder} = require('@discordjs/builders');
+const {SlashCommandBuilder, AttachmentBuilder} = require('discord.js');
 
 // A JavaScript implementation of the Fisher-Yates Shuffle
 // Code below is obtained from: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
@@ -25,14 +25,14 @@ function split(roster, splits) {
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('teamsplit')
-		.setDescription('splits the people in your voice call into teams of a given number. (Default is 5)')
+		.setDescription('splits the people in your voice call into teams of a given number (Default is 5).')
 		.addIntegerOption(option =>
 			option
 				.setName('size')
 				.setDescription('Number of people in each team.')),
 
 	async execute(interaction) {
-		await interaction.reply({ content: 'Generating teams...', fetchReply: true });
+		await interaction.reply({content: 'Generating teams...', fetchReply: true});
 
 		try {
 			const icon = new AttachmentBuilder('./assets/icon.png');
@@ -44,17 +44,17 @@ module.exports = {
 
 			const embed = new EmbedBuilder()
 				.setColor(0x0099FF)
-				.setAuthor({ name: `${interaction.member.voice.channel.name}`, iconURL: `${interaction.guild.iconURL()}` })
+				.setAuthor({name: `${interaction.member.voice.channel.name}`, iconURL: `${interaction.guild.iconURL()}`})
 				.setTitle('Generated Teams')
 				.setTimestamp()
-				.setFooter({ text: 'Powered by Cypress', iconURL: 'attachment://icon.png' });
+				.setFooter({text: 'Powered by Cypress', iconURL: 'attachment://icon.png'});
 
 			res.forEach(element => embed.addFields(
 				// eslint-disable-next-line no-shadow
-				{ name: `Team ${res.indexOf(element) + 1}`, value: element.map(element => `\`${element}\``).join(', ') },
+				{name: `Team ${res.indexOf(element) + 1}`, value: element.map(element => `\`${element}\``).join(', ')},
 			));
 
-			await interaction.editReply({ embeds: [embed], files: [icon] });
+			await interaction.editReply({embeds: [embed], files: [icon]});
 		}
 		catch (err) {
 			if (!interaction.member.voice.channel) {
