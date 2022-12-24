@@ -25,6 +25,7 @@ node update
 Currently, the bot supports these commands:
 ```
 /ping
+/echo (limited to the owner of the bot)
 /userinfo
 /serverinfo
 /roll
