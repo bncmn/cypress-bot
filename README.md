@@ -35,4 +35,4 @@ Currently, the bot supports these commands:
 These are implemented as application commands (or "slash commands").
 
 ---
-Last Updated: 2022/12/23 16:47 PST
+Last Updated: 2022/12/24 10:36 PST
