@@ -24,13 +24,14 @@ node update
 ## Usage
 Currently, the bot supports these commands:
 ```
+/ping
 /userinfo
 /serverinfo
 /roll
-/ping
+/teamsplit (splits a voicecall into teams of x)
 /yvr (purpose-built command for my own personal server)
 ```
 These are implemented as application commands (or "slash commands").
 
 ---
-Last Updated: 2022/12/22 12:22 PST (20:22 UTC)
+Last Updated: 2022/12/23 16:47 PST
