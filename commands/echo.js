@@ -29,6 +29,7 @@ module.exports = {
 		}
 		catch (err) {
 			await interaction.editReply({content: `Sending failed. Please try again.\n\`\`\`\n${err.message}\n\`\`\``});
+			console.error(err);
 		}
 	},
 };
