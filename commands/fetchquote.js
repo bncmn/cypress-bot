@@ -53,11 +53,11 @@ module.exports = {
 
 			if (randMsg.attachments.size > 0) {
 				await interaction.editReply({
-					content: `${randMsg.content}`,
+					content: `[[Link to Original]](https://discord.com/channels/353248925832052737/930231319663882292/${randMsgID})\n${randMsg.content}`,
 					files: [`${randMsg.attachments.first().url}`]});
 			}
 			else {
-				await interaction.editReply(`${randMsg.content}`);
+				await interaction.editReply(`[[Link to Original]](https://discord.com/channels/353248925832052737/930231319663882292/${randMsgID})\n${randMsg.content}`);
 			}
 		}
 		catch (err) {
