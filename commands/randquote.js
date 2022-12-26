@@ -47,7 +47,6 @@ module.exports = {
 			const channel = interaction.guild.channels.cache.get('930231319663882292');
 			const messages = await fetchMore(channel);
 
-			console.log(messages.size);
 			const msgIDs = Array.from(messages.keys());
 			const randMsgID = msgIDs[Math.floor(Math.random() * msgIDs.length)];
 			const randMsg = messages.get(randMsgID);
