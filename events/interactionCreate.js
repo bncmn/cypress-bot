@@ -16,7 +16,7 @@ module.exports = {
 			await command.execute(interaction);
 		}
 		catch (err) {
-			await interaction.reply({content: `There was an error while executing this command. Please try again.\n\`\`\`\n${err.message}\n\`\`\``, ephemeral: true});
+			await interaction.reply({content: `Cypress has encountered an error while executing this command. Please try again.\n\`\`\`\n${err.message}\n\`\`\``, ephemeral: true});
 			console.error(err);
 		}
 	},

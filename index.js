@@ -10,6 +10,8 @@ const {token} = require('./config.json');
 
 const client = new Client({intents: [
 	GatewayIntentBits.Guilds,
+	GatewayIntentBits.GuildMessages,
+	GatewayIntentBits.MessageContent,
 	GatewayIntentBits.GuildVoiceStates]});
 
 // Extends Map(); store and retrieve commands

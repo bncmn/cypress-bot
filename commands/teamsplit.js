@@ -2,7 +2,7 @@ const {EmbedBuilder} = require('@discordjs/builders');
 const {SlashCommandBuilder, AttachmentBuilder} = require('discord.js');
 
 // A JavaScript implementation of the Fisher-Yates Shuffle
-// Code below is obtained from: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+// Source: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
 // Minor modifications were made to implement a split for the purposes of this command.
 function split(roster, splits) {
 	let currentIndex = roster.length, randomIndex;
@@ -42,7 +42,7 @@ module.exports = {
 			const res = split(vcMembers, teams);
 
 			const embed = new EmbedBuilder()
-				.setColor(0x0099FF)
+				.setColor('B080FF')
 				.setAuthor({name: `${interaction.member.voice.channel.name}`, iconURL: `${interaction.guild.iconURL()}`})
 				.setTitle('Generated Teams')
 				.setTimestamp()

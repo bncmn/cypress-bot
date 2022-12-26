@@ -3,7 +3,7 @@ const {SlashCommandBuilder} = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('echo')
-		.setDescription('broadcasts a message to a channel. (Restricted to devs only)')
+		.setDescription('broadcasts a message to a channel. (Restricted)')
 		.addStringOption(option => option
 			.setName('message')
 			.setDescription('~')

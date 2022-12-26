@@ -1,10 +1,6 @@
 const {SlashCommandBuilder} = require('discord.js');
 
-function roll(min, max) {
-	min = Math.ceil(min);
-	max = Math.floor(max);
-	return Math.floor(Math.random() * (max - min + 1) + min);
-}
+const randNum = (min, max) => {Math.floor(Math.random() * (Math.floor(max) - Math.floor(min) + 1));};
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -29,7 +25,7 @@ module.exports = {
 				await interaction.editReply('`min` must be less than `max`. Please fix your inputs and try again.');
 			}
 			else {
-				await interaction.editReply(`I rolled ${roll(min, max)}. (${min} to ${max})`);
+				await interaction.editReply(`I rolled ${randNum}. (${min} to ${max})`);
 			}
 		}
 		catch (err) {

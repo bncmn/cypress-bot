@@ -37,7 +37,7 @@ module.exports = {
 					.join(', ');
 
 				const embed = new EmbedBuilder()
-					.setColor(0x0099FF)
+					.setColor('B080FF')
 					.setTitle('User Information')
 					.setThumbnail(`${target.user.avatarURL()}`)
 					.addFields(
@@ -59,7 +59,7 @@ module.exports = {
 				const roles = interaction.guild.roles.cache.size;
 
 				const embed = new EmbedBuilder()
-					.setColor(0x0099FF)
+					.setColor('B080FF')
 					.setTitle('Server Information')
 					.setThumbnail(`${interaction.guild.iconURL()}`)
 					.addFields(
