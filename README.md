@@ -31,9 +31,10 @@ Currently, the bot supports these commands:
 /roll <max> <min>
 /teamsplit <size>
 /yvr
+/randquote
 ```
 These are implemented as application commands (or "slash commands").<br>
-`/yvr` is purpose-built for my own personal server.
+`/yvr` and `/randquote` are purpose-built for my own personal server.
 
 ---
 Last Updated: 2022/12/25 15:06 PST
