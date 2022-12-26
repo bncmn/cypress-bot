@@ -10,7 +10,7 @@ module.exports = {
 		const icon = new AttachmentBuilder('./assets/icon.png');
 
 		const embed = new EmbedBuilder()
-			.setColor('B080FF')
+			.setColor(0xB080FF)
 			.setTitle('Vancouver Visitor\'s Guide')
 			.setURL('https://tiffxo.notion.site/Vancouver-1930c79e4cf649938fb47156f9d8a06d')
 			.setDescription(`Hey <@${interaction.user.id}>! Visiting Vancouver soon? Already here and don't know what to do?\n

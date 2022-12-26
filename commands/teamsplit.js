@@ -42,7 +42,7 @@ module.exports = {
 			const res = split(vcMembers, teams);
 
 			const embed = new EmbedBuilder()
-				.setColor('B080FF')
+				.setColor(0xB080FF)
 				.setAuthor({name: `${interaction.member.voice.channel.name}`, iconURL: `${interaction.guild.iconURL()}`})
 				.setTitle('Generated Teams')
 				.setTimestamp()
