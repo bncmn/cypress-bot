@@ -28,13 +28,16 @@ Currently, the bot supports these commands:
 /echo
 /info user <user>
 /info server
+/admin kick <user> <reason>
+/admin ban <user> <reason>
+/admin timeout <user> <length> <reason>
 /roll <max> <min>
-/teamsplit <size>
+/split-teams <size>
 /yvr
-/randquote
+/give-me-a-quote
 ```
 These are implemented as application commands (or "slash commands").<br>
-`/yvr` and `/randquote` are purpose-built for my own personal server.
+`/yvr` and `/give-me-a-quote` are purpose-built for my own personal server.
 
 ---
 Last Updated: 2022/12/25 15:06 PST

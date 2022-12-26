@@ -24,7 +24,7 @@ function split(roster, splits) {
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('teamsplit')
+		.setName('split-teams')
 		.setDescription('splits the people in your voice call into teams of a given number (Default is 5).')
 		.addIntegerOption(option => option
 			.setName('size')

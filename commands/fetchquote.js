@@ -37,7 +37,7 @@ async function fetchMore(channel, limit = 500) {
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('randquote')
+		.setName('give-me-a-quote')
 		.setDescription('fetches a quote from #quotes.'),
 
 	async execute(interaction) {
