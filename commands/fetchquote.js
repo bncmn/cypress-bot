@@ -1,4 +1,5 @@
-const {SlashCommandBuilder, Collection} = require('discord.js');
+const {EmbedBuilder} = require('@discordjs/builders');
+const {SlashCommandBuilder, AttachmentBuilder, Collection} = require('discord.js');
 
 // Source: https://stackoverflow.com/questions/66281939/discordjs-fetching-more-then-100-messages
 async function fetchMore(channel, limit = 500) {
@@ -52,12 +53,38 @@ module.exports = {
 			const randMsg = messages.get(randMsgID);
 
 			if (randMsg.attachments.size > 0) {
-				await interaction.editReply({
-					content: `[[Link to Original]](https://discord.com/channels/353248925832052737/930231319663882292/${randMsgID})\n${randMsg.content}`,
-					files: [`${randMsg.attachments.first().url}`]});
+				const icon = new AttachmentBuilder('./assets/icon.png');
+
+				const embed = new EmbedBuilder()
+					.setColor(0xB080FF)
+					.setTitle('Link to Original Post')
+					.setURL(`https://discord.com/channels/353248925832052737/930231319663882292/${randMsgID}`)
+					.setTimestamp()
+					.setFooter({text: 'Powered by Cypress', iconURL: 'attachment://icon.png'});
+
+				if (randMsg.content == '') {
+					embed.addFields(
+						{name: 'Text', value: '`No Text Content`'});
+				}
+				else {
+					embed.addFields(
+						{name: 'Text', value: randMsg.content});
+				}
+
+				await interaction.editReply({embeds: [embed], files: [randMsg.attachments.first().url, icon]});
 			}
 			else {
-				await interaction.editReply(`[[Link to Original]](https://discord.com/channels/353248925832052737/930231319663882292/${randMsgID})\n${randMsg.content}`);
+				const icon = new AttachmentBuilder('./assets/icon.png');
+
+				const embed = new EmbedBuilder()
+					.setColor(0xB080FF)
+					.setTitle('Link to Original Post')
+					.setURL(`https://discord.com/channels/353248925832052737/930231319663882292/${randMsgID}`)
+					.setDescription(`${randMsg.content}`)
+					.setTimestamp()
+					.setFooter({text: 'Powered by Cypress', iconURL: 'attachment://icon.png'});
+
+				await interaction.editReply({embeds: [embed], files: [icon]});
 			}
 		}
 		catch (err) {
