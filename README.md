@@ -40,4 +40,4 @@ These are implemented as application commands (or "slash commands").<br>
 `/yvr` and `/give-me-a-quote` are purpose-built for my own personal server.
 
 ---
-Last Updated: 2022/12/25 15:06 PST
+Last Updated: 2022/12/26 00:10 PST
