@@ -41,7 +41,7 @@ module.exports = {
 		.setDescription('fetches a quote from #quotes.'),
 
 	async execute(interaction) {
-		await interaction.reply({content: 'Fetching a quote...', fetchReply: true});
+		await interaction.deferReply();
 
 		try {
 			const channel = interaction.guild.channels.cache.get('930231319663882292');
@@ -52,7 +52,9 @@ module.exports = {
 			const randMsg = messages.get(randMsgID);
 
 			if (randMsg.attachments.size > 0) {
-				await interaction.editReply(`${randMsg.content}\n${randMsg.attachments.first().url}`);
+				await interaction.editReply({
+					content: `${randMsg.content}`,
+					files: [`${randMsg.attachments.first().url}`]});
 			}
 			else {
 				await interaction.editReply(`${randMsg.content}`);

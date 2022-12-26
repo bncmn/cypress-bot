@@ -14,7 +14,7 @@ module.exports = {
 			.setRequired(true)),
 
 	async execute(interaction) {
-		await interaction.reply({content: 'Sending...', fetchReply: true});
+		await interaction.deferReply();
 
 		try {
 			await interaction.client.application.fetch();

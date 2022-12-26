@@ -1,6 +1,8 @@
 const {SlashCommandBuilder} = require('discord.js');
 
-const randNum = (min, max) => {Math.floor(Math.random() * (Math.floor(max) - Math.floor(min) + 1));};
+function randNum(min, max) {
+	return Math.floor(Math.random() * (Math.floor(max) - Math.floor(min) + 1));
+}
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -15,7 +17,7 @@ module.exports = {
 			.setDescription('The lower bound.')),
 
 	async execute(interaction) {
-		await interaction.reply({content: 'Rolling...', fetchReply: true});
+		await interaction.deferReply();
 
 		try {
 			const min = interaction.options.getInteger('min') ?? '1';
@@ -25,7 +27,7 @@ module.exports = {
 				await interaction.editReply('`min` must be less than `max`. Please fix your inputs and try again.');
 			}
 			else {
-				await interaction.editReply(`I rolled ${randNum}. (${min} to ${max})`);
+				await interaction.editReply(`I rolled ${randNum(min, max)}. (${min} to ${max})`);
 			}
 		}
 		catch (err) {

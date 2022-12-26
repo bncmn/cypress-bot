@@ -31,7 +31,7 @@ module.exports = {
 			.setDescription('Number of people in each team.')),
 
 	async execute(interaction) {
-		await interaction.reply({content: 'Generating teams...', fetchReply: true});
+		await interaction.deferReply();
 
 		try {
 			const icon = new AttachmentBuilder('./assets/icon.png');
