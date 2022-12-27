@@ -33,6 +33,9 @@ Currently, the bot supports these commands:
 /admin timeout <user> <length> <reason>
 /roll <max> <min>
 /split-teams <size>
+/search anime <title>
+/search randcat
+/search randdog
 /yvr
 /give-me-a-quote
 ```
