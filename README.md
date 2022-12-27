@@ -7,7 +7,7 @@ This is a work-in-progress Discord bot that has a few (mostly trivial) commands.
 Cypress uses [Discord.JS](https://discord.js.org/) v14, which requires [Node.js v16.9](https://nodejs.org/en/) or higher. 
 
 ## Running the Bot
-You will need to create your own Application through Discord's [Developer Portal](https://discord.com/developers/applications), and obtain a `token` which you can put in a `config.json` file. More information [here](https://discordjs.guide/preparations/setting-up-a-bot-application.html) and [here](https://discordjs.guide/preparations/adding-your-bot-to-servers.html).
+You will need to create your own Application through Discord's [Developer Portal](https://discord.com/developers/applications), and obtain a `token` which you can put in a `.env` file. More information [here](https://discordjs.guide/preparations/setting-up-a-bot-application.html) and [here](https://discordjs.guide/preparations/adding-your-bot-to-servers.html).
 
 ```bash
 # Clone and enter the dir
