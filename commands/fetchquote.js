@@ -1,5 +1,4 @@
-const {EmbedBuilder} = require('@discordjs/builders');
-const {SlashCommandBuilder, AttachmentBuilder, Collection} = require('discord.js');
+const {SlashCommandBuilder, AttachmentBuilder, EmbedBuilder, Collection} = require('discord.js');
 
 // Source: https://stackoverflow.com/questions/66281939/discordjs-fetching-more-then-100-messages
 async function fetchMore(channel, limit = 500) {

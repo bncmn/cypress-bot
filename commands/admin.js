@@ -1,5 +1,4 @@
-const {EmbedBuilder} = require('@discordjs/builders');
-const {SlashCommandBuilder, AttachmentBuilder, PermissionFlagsBits} = require('discord.js');
+const {SlashCommandBuilder, AttachmentBuilder, EmbedBuilder, PermissionFlagsBits} = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -22,11 +21,11 @@ module.exports = {
 			.setDescription('bans a user from the server.')
 			.addUserOption(option => option
 				.setName('user')
-				.setDescription('The member to kick.')
+				.setDescription('The member to ban.')
 				.setRequired(true))
 			.addStringOption(option => option
 				.setName('reason')
-				.setDescription('The reason for the kick.')))
+				.setDescription('The reason for the ban.')))
 
 		.addSubcommand(subcommand => subcommand
 			.setName('timeout')
@@ -42,6 +41,17 @@ module.exports = {
 			.addStringOption(option => option
 				.setName('reason')
 				.setDescription('The reason for the mute.')))
+
+		.addSubcommand(subcommand => subcommand
+			.setName('unban')
+			.setDescription('removes a ban from a user.')
+			.addUserOption(option => option
+				.setName('user')
+				.setDescription('The member to unban.')
+				.setRequired(true))
+			.addStringOption(option => option
+				.setName('reason')
+				.setDescription('The reason for the unban.')))
 
 		.setDefaultMemberPermissions(PermissionFlagsBits.KickMembers && PermissionFlagsBits.BanMembers && PermissionFlagsBits.ModerateMembers),
 
@@ -71,6 +81,7 @@ module.exports = {
 
 				interaction.guild.members.kick(target, {reason: reason});
 			}
+
 			if (interaction.options.getSubcommand() == 'ban') {
 				embed
 					.setTitle(`${target.tag} has been banned.`)
@@ -82,6 +93,7 @@ module.exports = {
 
 				interaction.guild.members.ban(target, {reason: reason});
 			}
+
 			if (interaction.options.getSubcommand() == 'timeout') {
 				if (length == '0') {
 					embed
@@ -106,6 +118,17 @@ module.exports = {
 					interaction.guild.members.fetch(target)
 						.then(member => member.timeout(parseInt(length * 1000), {reason: reason}));
 				}
+			}
+			if (interaction.options.getSubcommand() == 'unban') {
+				embed
+					.setTitle(`${target.tag} has been unbanned.`)
+					.setThumbnail(target.avatarURL())
+					.addFields(
+						{name: 'User ID', value: `\`${target.id}\``},
+						{name: 'Reason', value: `\`${reason}\``},
+						{name: 'Issued by', value: `\`${interaction.user.tag}\``});
+
+				interaction.guild.members.unban(target, {reason: reason});
 			}
 
 			await interaction.editReply({embeds: [embed], files: [icon]});

@@ -1,5 +1,4 @@
-const {EmbedBuilder} = require('@discordjs/builders');
-const {SlashCommandBuilder, AttachmentBuilder} = require('discord.js');
+const {SlashCommandBuilder, AttachmentBuilder, EmbedBuilder} = require('discord.js');
 
 // A JavaScript implementation of the Fisher-Yates Shuffle
 // Source: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array

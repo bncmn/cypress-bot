@@ -1,6 +1,4 @@
-const {EmbedBuilder} = require('@discordjs/builders');
-const {SlashCommandBuilder, AttachmentBuilder} = require('discord.js');
-
+const {SlashCommandBuilder, AttachmentBuilder, EmbedBuilder} = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('yvr')

@@ -1,5 +1,4 @@
-const {EmbedBuilder} = require('@discordjs/builders');
-const {SlashCommandBuilder, AttachmentBuilder} = require('discord.js');
+const {SlashCommandBuilder, AttachmentBuilder, EmbedBuilder} = require('discord.js');
 
 function convert(timestamp) {
 	return Math.round(timestamp / 1000);
@@ -81,7 +80,7 @@ module.exports = {
 			}
 		}
 		catch (err) {
-			await interaction.editReply({content: `Fetching info failed. Please try again.\n\`\`\`\n${err.message}\n\`\`\``});
+			await interaction.editReply(`Fetching info failed. Please try again.\n\`\`\`\n${err.message}\n\`\`\``);
 			console.error(err);
 		}
 	},
