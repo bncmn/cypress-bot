@@ -4,20 +4,27 @@
 This is a work-in-progress Discord bot that has a few (mostly trivial) commands. This will be something I hope to work on as a side project, and will add more functionality (both simple and complex) while I try to get a hang of the Discord API, Discord.JS, and JavaScript in general.
 
 ## Dependencies 
-Cypress uses [Discord.JS](https://discord.js.org/) v14, which requires [Node.js v16.9](https://nodejs.org/en/) or higher. Discord.JS v14 can be installed directly through npm:
-```bash
-npm install discord.js
-```
+Cypress uses [Discord.JS](https://discord.js.org/) v14, which requires [Node.js v16.9](https://nodejs.org/en/) or higher. 
 
 ## Running the Bot
-You will need to create your own Application through Discord's [Developer Portal](https://discord.com/developers/applications), and obtain a `token` and `clientId` which you can put in a `config.json` file. More information [here](https://discordjs.guide/preparations/setting-up-a-bot-application.html) and [here](https://discordjs.guide/preparations/adding-your-bot-to-servers.html).
+You will need to create your own Application through Discord's [Developer Portal](https://discord.com/developers/applications), and obtain a `token` which you can put in a `config.json` file. More information [here](https://discordjs.guide/preparations/setting-up-a-bot-application.html) and [here](https://discordjs.guide/preparations/adding-your-bot-to-servers.html).
 
-Launch the bot:
 ```bash
-node .
+# Clone and enter the dir
+git clone git@github.com:bncmn/cypress-bot.git && cd cypress-bot
+
+# Install packages
+npm i
 ```
-Refresh the command list (used when adding a new command):
+
+Navigate into the `cypress-bot` folder and copy/rename `.env.example` to `.env`.
+For this example, only `token` needs to be changed. Change it to **your bot token**.
+
 ```bash
+# Start the bot
+node .
+
+# Refresh the command list (used when adding a new command)
 node update
 ```
 
@@ -33,6 +40,9 @@ Currently, the bot supports these commands:
 /admin timeout <user> <length> <reason>
 /roll <max> <min>
 /split-teams <size>
+/search anime <title>
+/search randcat
+/search randdog
 /yvr
 /give-me-a-quote
 ```
