@@ -19,7 +19,8 @@ npm i
 ```
 
 Navigate into the `cypress-bot` folder and copy/rename `.env.example` to `.env`.
-Change it to **your bot token and client ID**.
+Change it to **your bot token and client ID**.<br>
+Some commands (usually `/search <...>` commands) may require an API key in order to function. You can also include your API keys in the `.env` file.
 
 ```bash
 # Start the bot
@@ -28,7 +29,6 @@ node .
 # Refresh the command list (used when adding a new command)
 node update
 ```
-Some commands (usually `/search <...>` commands) may require an API key in order to function. Currently, the bot will look for and retrieve these from a file called `keys.json`, which you can create yourself.
 ## Usage
 Currently, the bot supports these commands:
 ### Info
