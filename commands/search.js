@@ -1,6 +1,6 @@
 const {SlashCommandBuilder, AttachmentBuilder, EmbedBuilder} = require('discord.js');
 const {request} = require('undici');
-const {openweather_key} = require('../keys.json');
+require('dotenv').config();
 
 const trim = (str, max) => (str.length > max ? `${str.slice(0, max - 3)}...` : str);
 
@@ -87,7 +87,7 @@ module.exports = {
 
 				const query = new URLSearchParams([
 					['q', city],
-					['appid', openweather_key],
+					['appid', process.env.openweather_key],
 				]);
 				const result = await request(`https://api.openweathermap.org/data/2.5/weather?${query}`);
 				const data = await result.body.json();
