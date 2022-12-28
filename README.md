@@ -10,7 +10,7 @@ Cypress uses [Discord.JS](https://discord.js.org/) v14, which requires [Node.js 
 You will need to create your own Application through Discord's [Developer Portal](https://discord.com/developers/applications), and obtain a `token` which you can put in a `.env` file. More information [here](https://discordjs.guide/preparations/setting-up-a-bot-application.html) and [here](https://discordjs.guide/preparations/adding-your-bot-to-servers.html).
 
 ```bash
-# Clone and enter the dir
+# Clone and enter the directory
 git clone git@github.com:bncmn/cypress-bot.git && cd cypress-bot
 
 # Install packages
@@ -48,6 +48,3 @@ Currently, the bot supports these commands:
 ```
 These are implemented as application commands (or "slash commands").<br>
 `/yvr` and `/give-me-a-quote` are purpose-built for my own personal server.
-
----
-Last Updated: 2022/12/26 00:10 PST
