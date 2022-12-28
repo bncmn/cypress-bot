@@ -48,12 +48,22 @@ module.exports = {
 						{name: 'Runtime', value: data[0].duration, inline: true},
 						{name: 'Synopsis', value: trim(data[0].synopsis, 1024) ?? 'No data found'},
 						{name: 'Type', value: data[0].type ?? 'No data found', inline: true},
-						{name: 'Genre(s)', value: data[0].genres.map(genres => genres.name).join(', ') ?? 'No data found', inline: true},
 						{name: 'Episodes', value: String(data[0].episodes) ?? 'No data found', inline: true},
 					)
 					.setImage(data[0].images.jpg.image_url)
 					.setTimestamp()
 					.setFooter({text: 'Powered by Cypress and MyAnimeList.net', iconURL: 'attachment://icon.png'});
+
+				if (data[0].genres.length > 0) {
+					embed.addFields(
+						{name: 'Genre(s)', value: data[0].genres.map(genres => genres.name).join(', '), inline: true},
+					);
+				}
+				else {
+					embed.addFields(
+						{name: 'Genre(s)', value: 'No data found', inline: true},
+					);
+				}
 
 				await interaction.editReply({embeds: [embed], files: [icon]});
 			}
