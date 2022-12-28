@@ -65,7 +65,7 @@ module.exports = {
 					)
 					.setImage(data[0].images.jpg.image_url)
 					.setTimestamp()
-					.setFooter({text: 'Powered by Cypress and MyAnimeList.net', iconURL: 'attachment://icon.png'});
+					.setFooter({text: 'Powered by Cypress and MyAnimeList', iconURL: 'attachment://icon.png'});
 
 				if (data[0].genres.length > 0) {
 					embed.addFields(
@@ -109,7 +109,7 @@ module.exports = {
 						{name: 'Wind', value: `${data.wind.speed}m/s ${degToCompass(data.wind.deg)}`},
 						{name: 'Humidity', value: `${data.main.humidity}%`})
 					.setTimestamp()
-					.setFooter({text: 'Powered by Cypress and OpenWeatherMap.org', iconURL: 'attachment://icon.png'});
+					.setFooter({text: 'Powered by Cypress and OpenWeather', iconURL: 'attachment://icon.png'});
 
 				if (data.rain) {
 					embed.addFields({name: 'Rain (hourly)', value: `${data.rain['1h'] ?? 0}mm`});
