@@ -2,4 +2,5 @@ config.json
 discord-bot.code-workspace
 node_modules
 .env
+keys.json
 *.log

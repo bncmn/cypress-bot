@@ -11,7 +11,8 @@ You will need to create your own Application through Discord's [Developer Portal
 
 ```bash
 # Clone and enter the directory
-git clone git@github.com:bncmn/cypress-bot.git && cd cypress-bot
+git clone git@github.com:bncmn/cypress-bot.git
+cd cypress-bot
 
 # Install packages
 npm i
@@ -27,22 +28,34 @@ node .
 # Refresh the command list (used when adding a new command)
 node update
 ```
-
+Some commands (usually `/search <...>` commands) may require an API key in order to function. Currently, the bot will look for and retrieve these from a file called `keys.json`, which you can create yourself.
 ## Usage
 Currently, the bot supports these commands:
+### Info
 ```
-/ping
-/echo
 /info user <user>
 /info server
+```
+### Administrative
+```
 /admin kick <user> <reason>
 /admin ban <user> <reason>
 /admin timeout <user> <length> <reason>
-/roll <max> <min>
-/split-teams <size>
+/admin unban <user> <reason>
+```
+### Search
+```
 /search anime <title>
+/search weather <city>
 /search randcat
 /search randdog
+```
+### Miscellaneous
+```
+/ping
+/roll <max> <min>
+/split-teams <size>
+/echo (locked to application owner)
 /yvr
 /give-me-a-quote
 ```

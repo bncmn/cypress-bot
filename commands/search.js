@@ -1,7 +1,14 @@
 const {SlashCommandBuilder, AttachmentBuilder, EmbedBuilder} = require('discord.js');
 const {request} = require('undici');
+const {openweather_key} = require('../keys.json');
 
 const trim = (str, max) => (str.length > max ? `${str.slice(0, max - 3)}...` : str);
+
+function degToCompass(num) {
+	const val = Math.floor((num / 22.5) + 0.5);
+	const arr = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
+	return arr[(val % 16)];
+}
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -13,7 +20,15 @@ module.exports = {
 			.setDescription('retrieves the MyAnimeList entry for an anime.')
 			.addStringOption(option => option
 				.setName('title')
-				.setDescription('The title of the anime')
+				.setDescription('The title of the anime.')
+				.setRequired(true)))
+
+		.addSubcommand(subcommand => subcommand
+			.setName('weather')
+			.setDescription('retrieves the weather for a city.')
+			.addStringOption(option => option
+				.setName('city')
+				.setDescription('The city to be searched.')
 				.setRequired(true)))
 
 		.addSubcommand(subcommand => subcommand
@@ -32,12 +47,10 @@ module.exports = {
 
 			if (interaction.options.getSubcommand() == 'anime') {
 				const title = interaction.options.getString('title');
-				const query = new URLSearchParams({title});
 
+				const query = new URLSearchParams({title});
 				const result = await request(`https://api.jikan.moe/v4/anime?q=${query}`);
 				const {data} = await result.body.json();
-
-				// console.log(data[0]);
 
 				const embed = new EmbedBuilder()
 					.setColor(0xB080FF)
@@ -66,6 +79,46 @@ module.exports = {
 				}
 
 				await interaction.editReply({embeds: [embed], files: [icon]});
+			}
+
+			if (interaction.options.getSubcommand() == 'weather') {
+				const openweatherlogo = new AttachmentBuilder('./assets/openweatherlogo.png');
+				const city = interaction.options.getString('city');
+
+				const query = new URLSearchParams([
+					['q', city],
+					['appid', openweather_key],
+				]);
+				const result = await request(`https://api.openweathermap.org/data/2.5/weather?${query}`);
+				const data = await result.body.json();
+
+				const embed = new EmbedBuilder()
+					.setColor(0xB080FF)
+					.setTitle(data.name)
+					.setURL(`https://openweathermap.org/city/${data.id}`)
+					.setThumbnail('attachment://openweatherlogo.png')
+					.addFields(
+						{name: 'Current Conditions', value: `**${data.weather[0].main}.** ${data.weather[0].description}.`},
+						{name: 'Temperature', value: `${String(Math.round(data.main.temp - 273.15))}\u00B0C (${String(Math.round(((data.main.temp - 273.15) * 1.8) + 32))}\u00B0F)`, inline: true},
+						{name: 'Feels Like', value: `${String(Math.round(data.main.feels_like - 273.15))}\u00B0C (${String(Math.round(((data.main.feels_like - 273.15) * 1.8) + 32))}\u00B0F)`, inline: true},
+						{name: '\u200b', value: '\u200b', inline: true},
+						{name: 'Daily Low', value: `${String(Math.round(data.main.temp_min - 273.15))}\u00B0C (${String(Math.round(((data.main.temp_min - 273.15) * 1.8) + 32))}\u00B0F)`, inline: true},
+						{name: 'Daily High', value: `${String(Math.round(data.main.temp_max - 273.15))}\u00B0C (${String(Math.round(((data.main.temp_max - 273.15) * 1.8) + 32))}\u00B0F)`, inline: true},
+						{name: '\u200b', value: '\u200b', inline: true},
+						{name: 'Visibility', value: `${data.visibility / 1000}km`},
+						{name: 'Wind', value: `${data.wind.speed}m/s ${degToCompass(data.wind.deg)}`},
+						{name: 'Humidity', value: `${data.main.humidity}%`})
+					.setTimestamp()
+					.setFooter({text: 'Powered by Cypress and OpenWeatherMap.org', iconURL: 'attachment://icon.png'});
+
+				if (data.rain) {
+					embed.addFields({name: 'Rain (hourly)', value: `${data.rain['1h'] ?? 0}mm`});
+				}
+				if (data.snow) {
+					embed.addFields({name: 'Snow (hourly)', value: `${data.snow['1h'] ?? 0}mm`});
+				}
+
+				await interaction.editReply({embeds: [embed], files: [icon, openweatherlogo]});
 			}
 
 			if (interaction.options.getSubcommand() == 'randdog') {
