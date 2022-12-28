@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 // fs -> Node's native file system module; reads ~/commands
 // path -> Node's native path utility module;
 const fs = require('node:fs');
@@ -6,7 +8,7 @@ const path = require('node:path');
 // Required discord.js classes
 // eslint-disable-next-line no-unused-vars
 const {Client, Events, GatewayIntentBits, Collection} = require('discord.js');
-const {token} = require('./config.json');
+const token = process.env.token;
 
 const client = new Client({intents: [
 	GatewayIntentBits.Guilds,
