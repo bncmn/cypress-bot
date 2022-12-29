@@ -37,7 +37,7 @@ Navigate into config.json file and update the following lines to change bot pres
 # Changes bot activity status
 "activity": "string",
 
-# 0 = Playing {activity}, 1 = Streaming {activity}, 2 = Listening to {activity}, 3 = Watching {activity}
+# 0 = Playing {activity}, 2 = Listening to {activity}, 3 = Watching {activity}
 "activityType": integer,
 
 # Status: "online", "idle", "dnd", "invisible"
