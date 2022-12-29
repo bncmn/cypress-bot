@@ -1,10 +1,17 @@
-const {Events, ActivityType} = require('discord.js');
+const {Events} = require('discord.js');
+const {activity, activityType, status} = require('../config.json');
 
 module.exports = {
 	name: Events.ClientReady,
 	once: true, // Event only runs once
-	execute(client) {
+	execute(client){
 		console.log(`[ONLINE] >> ${client.user.tag} << is online.`);
-		client.user.setActivity('diego wonder why im broken haha', {type: ActivityType.Watching});
-	},
+
+    client.user.setPresence({
+      activities: [{
+        name: activity,
+        type: activityType
+      }],
+      status: status});
+	}
 };
