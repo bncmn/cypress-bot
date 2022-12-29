@@ -42,7 +42,7 @@ module.exports = {
 
 			const embed = new EmbedBuilder()
 				.setColor(0xB080FF)
-				.setAuthor({name: `${interaction.member.voice.channel.name}`, iconURL: `${interaction.guild.iconURL()}`})
+				.setAuthor({name: interaction.member.voice.channel.name, iconURL: interaction.guild.iconURL()})
 				.setTitle('Generated Teams')
 				.setTimestamp()
 				.setFooter({text: 'Powered by Cypress', iconURL: 'attachment://icon.png'});
