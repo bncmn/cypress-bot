@@ -13,5 +13,6 @@ module.exports = {
         type: activityType
       }],
       status: status});
+
 	}
 };
