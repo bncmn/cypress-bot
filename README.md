@@ -30,6 +30,20 @@ node .
 node update
 ```
 ## Usage
+
+### Updating bot presence
+Navigate into config.json file and update the following lines to change bot presence settings. (Stop and restart the bot if it is still running)
+```json
+# Changes bot activity status
+"activity": "string",
+
+# 0 = Playing {activity}, 1 = Streaming {activity}, 2 = Listening to {activity}, 3 = Watching {activity}
+"activityType": integer,
+
+# Status: "online", "idle", "dnd", "invisible"
+"status": "string"
+```
+
 Currently, the bot supports these commands:
 ### Info
 ```
