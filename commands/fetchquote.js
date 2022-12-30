@@ -79,7 +79,7 @@ module.exports = {
 					.setColor(0xB080FF)
 					.setTitle('Link to Original Post')
 					.setURL(`https://discord.com/channels/353248925832052737/930231319663882292/${randMsgID}`)
-					.setDescription(`${randMsg.content}`)
+					.setDescription(randMsg.content)
 					.setTimestamp()
 					.setFooter({text: 'Powered by Cypress', iconURL: 'attachment://icon.png'});
 

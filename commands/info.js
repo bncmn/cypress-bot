@@ -40,7 +40,7 @@ module.exports = {
 				const embed = new EmbedBuilder()
 					.setColor(0xB080FF)
 					.setTitle('User Information')
-					.setThumbnail(`${target.user.avatarURL()}`)
+					.setThumbnail(target.user.avatarURL())
 					.addFields(
 						{name: 'Name', value: `\`${target.user.tag}\` (ID: \`${target.user.id}\`)`},
 						{name: 'Created', value: `<t:${convert(target.user.createdTimestamp)}:D> (<t:${convert(target.user.createdTimestamp)}:R>)`},
@@ -62,7 +62,7 @@ module.exports = {
 				const embed = new EmbedBuilder()
 					.setColor(0xB080FF)
 					.setTitle('Server Information')
-					.setThumbnail(`${interaction.guild.iconURL()}`)
+					.setThumbnail(interaction.guild.iconURL())
 					.addFields(
 						{name: 'Name', value: interaction.guild.name},
 						{name: 'Owner', value: `<@${interaction.guild.ownerId}> (ID: \`${interaction.guild.ownerId}\`)`},
