@@ -54,6 +54,14 @@ module.exports = {
 				.setDescription('The reason for the unban.')))
 
 		.addSubcommand(subcommand => subcommand
+			.setName('whois')
+			.setDescription('lists users with the role.')
+			.addRoleOption(option => option
+				.setName('role')
+				.setDescription('The role to list.')
+				.setRequired(true)))
+
+		.addSubcommand(subcommand => subcommand
 			.setName('addrole')
 			.setDescription('adds a role to a user.')
 			.addUserOption(option => option
@@ -154,6 +162,24 @@ module.exports = {
 				interaction.guild.members.unban(target, {reason: reason});
 			}
 
+			if (interaction.options.getSubcommand() == 'whois') {
+				const role = interaction.options.getRole('role');
+
+				await interaction.guild.members.fetch();
+
+				const roleMembers = interaction.guild.roles.cache.get(role.id)
+					.members.map(member => `\`${member.user.tag}\``)
+					.join('\n');
+
+				embed
+					.setTitle(`Members of ${role.name}`)
+					.setThumbnail(interaction.guild.iconURL())
+					.addFields(
+						{name: 'Role', value: `${role}`, inline: true},
+						{name: 'Count', value: String(interaction.guild.roles.cache.get(role.id).members.size), inline: true},
+						{name: 'Members', value: roleMembers});
+			}
+
 			if (interaction.options.getSubcommand() == 'addrole') {
 				const role = interaction.options.getRole('role');
 
@@ -177,7 +203,7 @@ module.exports = {
 			await interaction.editReply({embeds: [embed], files: [icon]});
 		}
 		catch (err) {
-			await interaction.editReply(`There was an error executing the command. Please try again.\n\`\`\`\n${err.message}\n\`\`\``);
+			await interaction.editReply(`There was an error while trying to execute this command. Please try again.\n\`\`\`\n${err.message}\n\`\`\``);
 			console.error(err);
 		}
 	},
