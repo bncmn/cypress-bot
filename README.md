@@ -19,8 +19,7 @@ npm i
 ```
 
 Navigate into the `cypress-bot` folder and copy/rename `.env.example` to `.env`.
-Change it to **your bot token and client ID**.<br>
-Some commands (usually `/search <...>` commands) may require an API key in order to function. You can also include your API keys in the `.env` file.
+Change it to **your bot token and client ID**. Some commands (usually `/search <...>` commands) may require an API key in order to function. You can also include your API keys in the `.env` file.
 
 ```bash
 # Start the bot
@@ -32,7 +31,7 @@ node update
 ## Usage
 
 ### Updating bot presence
-Navigate into config.json file and update the following lines to change bot presence settings. (Restart the bot to observe the changes)
+Navigate into the `config.json` file and update the following lines to change the bot's presence settings. You will need to restart the bot to observe the changes.
 &nbsp;
 
 Change activity status:
@@ -48,27 +47,27 @@ Change online status: "online", "idle", "dnd", "invisible"
 "status": "online"
 ```
 &nbsp;
-### Currently, the bot supports these commands:
-### Info
+### Available commands
+#### Info
 ```
 /info user <user>
 /info server
 ```
-### Administrative
+#### Administrative
 ```
 /admin kick <user> <reason>
 /admin ban <user> <reason>
 /admin timeout <user> <length> <reason>
 /admin unban <user> <reason>
 ```
-### Search
+#### Search
 ```
 /search anime <title>
 /search weather <city>
 /search randcat
 /search randdog
 ```
-### Miscellaneous
+#### Miscellaneous
 ```
 /ping
 /roll <max> <min>

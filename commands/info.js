@@ -46,7 +46,7 @@ module.exports = {
 						{name: 'Created', value: `<t:${convert(target.user.createdTimestamp)}:D> (<t:${convert(target.user.createdTimestamp)}:R>)`},
 						{name: `Nickname in ${interaction.guild.name}`, value: `\`${target.displayName}\``},
 						{name: `Joined ${interaction.guild.name}`, value: `<t:${convert(target.joinedTimestamp)}:D> (<t:${convert(target.joinedTimestamp)}:R>)`},
-						{name: `Roles in ${interaction.guild.name}`, value: `${userRoles}`},
+						{name: `Roles in ${interaction.guild.name}`, value: userRoles},
 					)
 					.setTimestamp()
 					.setFooter({text: 'Powered by Cypress', iconURL: 'attachment://icon.png'});
@@ -64,7 +64,7 @@ module.exports = {
 					.setTitle('Server Information')
 					.setThumbnail(`${interaction.guild.iconURL()}`)
 					.addFields(
-						{name: 'Name', value: `${interaction.guild.name}`},
+						{name: 'Name', value: interaction.guild.name},
 						{name: 'Owner', value: `<@${interaction.guild.ownerId}> (ID: \`${interaction.guild.ownerId}\`)`},
 						{name: 'Created', value: `<t:${convert(interaction.guild.createdTimestamp)}> (<t:${convert(interaction.guild.createdTimestamp)}:R>)`},
 						{name: 'Member Count', value: `\`${interaction.guild.memberCount}\``, inline: true},

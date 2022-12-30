@@ -10,7 +10,7 @@ module.exports = {
 			.setDescription('kicks a user from the server.')
 			.addUserOption(option => option
 				.setName('user')
-				.setDescription('The member to kick.')
+				.setDescription('The user to kick.')
 				.setRequired(true))
 			.addStringOption(option => option
 				.setName('reason')
@@ -21,7 +21,7 @@ module.exports = {
 			.setDescription('bans a user from the server.')
 			.addUserOption(option => option
 				.setName('user')
-				.setDescription('The member to ban.')
+				.setDescription('The user to ban.')
 				.setRequired(true))
 			.addStringOption(option => option
 				.setName('reason')
@@ -47,11 +47,23 @@ module.exports = {
 			.setDescription('removes a ban from a user.')
 			.addUserOption(option => option
 				.setName('user')
-				.setDescription('The member to unban.')
+				.setDescription('The user to unban.')
 				.setRequired(true))
 			.addStringOption(option => option
 				.setName('reason')
 				.setDescription('The reason for the unban.')))
+
+		.addSubcommand(subcommand => subcommand
+			.setName('addrole')
+			.setDescription('adds a role to a user.')
+			.addUserOption(option => option
+				.setName('user')
+				.setDescription('The user to add the role to.')
+				.setRequired(true))
+			.addRoleOption(option => option
+				.setName('role')
+				.setDescription('The role to be added.')
+				.setRequired(true)))
 
 		.setDefaultMemberPermissions(PermissionFlagsBits.KickMembers && PermissionFlagsBits.BanMembers && PermissionFlagsBits.ModerateMembers),
 
@@ -63,7 +75,6 @@ module.exports = {
 
 			const target = interaction.options.getUser('user');
 			const reason = interaction.options.getString('reason') ?? 'No reason specified.';
-			const length = interaction.options.getInteger('length');
 
 			const embed = new EmbedBuilder()
 				.setColor(0xB080FF)
@@ -95,6 +106,8 @@ module.exports = {
 			}
 
 			if (interaction.options.getSubcommand() == 'timeout') {
+				const length = interaction.options.getInteger('length');
+
 				if (length == '0') {
 					embed
 						.setTitle(`${target.tag} has been unmuted.`)
@@ -103,7 +116,11 @@ module.exports = {
 							{name: 'Issued by', value: `\`${interaction.user.tag}\``});
 
 					interaction.guild.members.fetch(target)
-						.then(member => member.timeout(null));
+						.then(member => member.timeout(null))
+						.catch(function(err) {
+							interaction.editReply(`There was an error trying to issue administrative action. Please try again.\n\`\`\`\n${err.message}\n\`\`\``);
+							console.error(err);
+						});
 				}
 				else {
 					embed
@@ -116,9 +133,15 @@ module.exports = {
 							{name: 'Issued by', value: `\`${interaction.user.tag}\``});
 
 					interaction.guild.members.fetch(target)
-						.then(member => member.timeout(parseInt(length * 1000), {reason: reason}));
+						.then(member => member.timeout(parseInt(length * 1000), {reason: reason}))
+						.catch(function(err) {
+							interaction.editReply(`There was an error trying to issue administrative action. Please try again.\n\`\`\`\n${err.message}\n\`\`\``);
+							console.error(err);
+						});
+
 				}
 			}
+
 			if (interaction.options.getSubcommand() == 'unban') {
 				embed
 					.setTitle(`${target.tag} has been unbanned.`)
@@ -131,10 +154,30 @@ module.exports = {
 				interaction.guild.members.unban(target, {reason: reason});
 			}
 
+			if (interaction.options.getSubcommand() == 'addrole') {
+				const role = interaction.options.getRole('role');
+
+				if (role.editable) {
+					embed
+						.setTitle(`A role has been given to ${target.tag}.`)
+						.setThumbnail(target.avatarURL())
+						.addFields(
+							{name: 'User ID', value: `\`${target.id}\``},
+							{name: 'Role', value: `${role}`},
+							{name: 'Issued by', value: `\`${interaction.user.tag}\``});
+
+					interaction.guild.members.fetch(target)
+						.then(member => member.roles.add(role));
+				}
+				else {
+					throw new Error('Bot\'s role is lower than the role being assigned.');
+				}
+			}
+
 			await interaction.editReply({embeds: [embed], files: [icon]});
 		}
 		catch (err) {
-			await interaction.editReply(`There was an error trying to issue administrative action. Please try again.\n\`\`\`\n${err.message}\n\`\`\``);
+			await interaction.editReply(`There was an error executing the command. Please try again.\n\`\`\`\n${err.message}\n\`\`\``);
 			console.error(err);
 		}
 	},
