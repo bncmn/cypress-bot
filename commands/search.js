@@ -57,11 +57,11 @@ module.exports = {
 					.setTitle(data[0].title)
 					.setURL(data[0].url)
 					.addFields(
-						{name: 'MyAnimeList Score', value: String(data[0].score) ?? 'No data found', inline: true},
-						{name: 'Runtime', value: data[0].duration, inline: true},
-						{name: 'Synopsis', value: trim(data[0].synopsis, 1024) ?? 'No data found'},
+						{name: 'MyAnimeList Score', value: String(data[0].score ?? 'No data found'), inline: true},
+						{name: 'Runtime', value: data[0].duration ?? 'No data found', inline: true},
+						{name: 'Synopsis', value: trim(data[0].synopsis ?? 'No data found', 1024)},
 						{name: 'Type', value: data[0].type ?? 'No data found', inline: true},
-						{name: 'Episodes', value: String(data[0].episodes) ?? 'No data found', inline: true},
+						{name: 'Episodes', value: String(data[0].episodes ?? 'No data found'), inline: true},
 					)
 					.setImage(data[0].images.jpg.image_url)
 					.setTimestamp()

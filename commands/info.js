@@ -35,7 +35,7 @@ module.exports = {
 
 				const userRoles = target.roles.cache
 					.map(role => `\`${role.name}\``)
-					.join(', ');
+					.join('\n');
 
 				const embed = new EmbedBuilder()
 					.setColor(0xB080FF)
