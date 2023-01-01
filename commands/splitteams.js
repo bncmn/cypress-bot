@@ -31,7 +31,6 @@ module.exports = {
 
 	async execute(interaction) {
 		await interaction.deferReply();
-		console.log(`[LOG] ${interaction.user.tag} used ${interaction.commandName}.`);
 
 		try {
 			const icon = new AttachmentBuilder('./assets/icon.png');

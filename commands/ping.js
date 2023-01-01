@@ -10,7 +10,6 @@ module.exports = {
 
 	async execute(interaction) {
 		const icon = new AttachmentBuilder('./assets/icon.png');
-		console.log(`[LOG] ${interaction.user.tag} used ${interaction.commandName}.`);
 
 		try {
 			const sent = await interaction.reply({content: 'Pinging...', fetchReply: true});
