@@ -36,7 +36,7 @@ for (const file of commandFiles) {
 		client.commands.set(command.data.name, command);
 	}
 	else {
-		console.log('[WARNING] Command at >> ${filePath} << missing a required "data" or "execute" property.');
+		console.log('[WARNING] Command at ${filePath} missing a required "data" or "execute" property.');
 	}
 }
 

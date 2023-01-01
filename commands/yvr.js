@@ -6,6 +6,7 @@ module.exports = {
 
 	async execute(interaction) {
 		const icon = new AttachmentBuilder('./assets/icon.png');
+		console.log(`[LOG] ${interaction.user.tag} used ${interaction.commandName}.`);
 
 		const embed = new EmbedBuilder()
 			.setColor(0xB080FF)
