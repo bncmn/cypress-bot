@@ -1,4 +1,7 @@
-const {SlashCommandBuilder, AttachmentBuilder, EmbedBuilder, PermissionFlagsBits} = require('discord.js');
+const {SlashCommandBuilder, AttachmentBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, Events, PermissionFlagsBits} = require('discord.js');
+const hastebin = require('hastebin-gen');
+
+const trim = (str, max) => (str.length > max ? `${str.slice(0, max - 3)}...` : str);
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -99,6 +102,8 @@ module.exports = {
 						{name: 'Issued by', value: `\`${interaction.user.tag}\``});
 
 				interaction.guild.members.kick(target, {reason: reason});
+
+				await interaction.editReply({embeds: [embed], files: [icon]});
 			}
 
 			if (interaction.options.getSubcommand() == 'ban') {
@@ -111,6 +116,8 @@ module.exports = {
 						{name: 'Issued by', value: `\`${interaction.user.tag}\``});
 
 				interaction.guild.members.ban(target, {reason: reason});
+
+				await interaction.editReply({embeds: [embed], files: [icon]});
 			}
 
 			if (interaction.options.getSubcommand() == 'timeout') {
@@ -148,6 +155,8 @@ module.exports = {
 						});
 
 				}
+
+				await interaction.editReply({embeds: [embed], files: [icon]});
 			}
 
 			if (interaction.options.getSubcommand() == 'unban') {
@@ -160,6 +169,8 @@ module.exports = {
 						{name: 'Issued by', value: `\`${interaction.user.tag}\``});
 
 				interaction.guild.members.unban(target, {reason: reason});
+
+				await interaction.editReply({embeds: [embed], files: [icon]});
 			}
 
 			if (interaction.options.getSubcommand() == 'whois') {
@@ -171,13 +182,49 @@ module.exports = {
 					.members.map(member => `\`${member.user.tag}\``)
 					.join('\n');
 
-				embed
-					.setTitle(`Members of ${role.name}`)
-					.setThumbnail(interaction.guild.iconURL())
-					.addFields(
-						{name: 'Role', value: `${role}`, inline: true},
-						{name: 'Count', value: String(interaction.guild.roles.cache.get(role.id).members.size), inline: true},
-						{name: 'Members', value: roleMembers});
+				if (roleMembers.length < 1024) {
+					embed
+						.setTitle(`Members of ${role.name}`)
+						.setThumbnail(interaction.guild.iconURL())
+						.addFields(
+							{name: 'Role', value: `${role}`, inline: true},
+							{name: 'Count', value: String(interaction.guild.roles.cache.get(role.id).members.size), inline: true},
+							{name: 'Members', value: trim(roleMembers, 1024)});
+				}
+				else {
+					const hasteLink = await hastebin(roleMembers, 'txt');
+
+					embed
+						.setTitle(`Members of ${role.name}`)
+						.setThumbnail(interaction.guild.iconURL())
+						.addFields(
+							{name: 'Role', value: `${role}`, inline: true},
+							{name: 'Count', value: String(interaction.guild.roles.cache.get(role.id).members.size), inline: true},
+							{name: 'Members', value: hasteLink})
+						.setFooter({text: 'Powered by Cypress and Hastebin', iconURL: 'attachment://icon.png'});
+				}
+
+
+				/* const row = new ActionRowBuilder()
+					.addComponents(
+						new ButtonBuilder()
+							.setCustomId('rolesPreviousPage')
+							.setLabel('Previous Page')
+							.setStyle(ButtonStyle.Primary)
+							.setDisabled(true),
+						new ButtonBuilder()
+							.setCustomId('rolesNextPage')
+							.setLabel('Next Page')
+							.setStyle(ButtonStyle.Primary),
+					); */
+
+				await interaction.editReply({embeds: [embed], files: [icon]/* , components: [row] */});
+
+				/* // eslint-disable-next-line no-shadow
+				interaction.client.on(Events.InteractionCreate, interaction => {
+					if (!interaction.isButton()) return;
+					console.log(interaction);
+				}); */
 			}
 
 			if (interaction.options.getSubcommand() == 'addrole') {
@@ -198,9 +245,9 @@ module.exports = {
 				else {
 					throw new Error('Bot\'s role is lower than the role being assigned.');
 				}
-			}
 
-			await interaction.editReply({embeds: [embed], files: [icon]});
+				await interaction.editReply({embeds: [embed], files: [icon]});
+			}
 		}
 		catch (err) {
 			await interaction.editReply(`There was an error while trying to execute this command. Please try again.\n\`\`\`\n${err.message}\n\`\`\``);
