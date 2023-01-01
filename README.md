@@ -4,7 +4,7 @@
 This is a work-in-progress Discord bot that has a few (mostly trivial) commands. This will be something I hope to work on as a side project, and will add more functionality (both simple and complex) while I try to get a hang of the Discord API, Discord.JS, and JavaScript in general.
 
 ## Dependencies 
-Cypress uses [Discord.JS](https://discord.js.org/) v14, which requires [Node.js v16.9](https://nodejs.org/en/) or higher. 
+Cypress uses [Discord.JS v14](https://discord.js.org/), which requires [Node.js v16.9](https://nodejs.org/en/) or higher. 
 
 ## Running the Bot
 You will need to create your own Application through Discord's [Developer Portal](https://discord.com/developers/applications), and obtain a `token` and `clientId` which you can put in a `.env` file. More information [here](https://discordjs.guide/preparations/setting-up-a-bot-application.html) and [here](https://discordjs.guide/preparations/adding-your-bot-to-servers.html).
@@ -18,8 +18,8 @@ cd cypress-bot
 npm i
 ```
 
-Navigate into the `cypress-bot` folder and copy/rename `.env.example` to `.env`.
-Change it to **your bot token and client ID**. Some commands (usually `/search <...>` commands) may require an API key in order to function. You can also include your API keys in the `.env` file.
+Navigate into the `cypress-bot` folder and copy (or rename) `.env.example` to `.env`.
+Change the fields in your `.env` file to **your bot token and client ID**. Some commands (usually `/search <...>` commands) may require an API key in order to function. You should also include these in the `.env` file.
 
 ```bash
 # Start the bot
@@ -46,29 +46,26 @@ Change online status: "online", "idle", "dnd", "invisible"
 ```json
 "status": "online"
 ```
-&nbsp;
 ### Available commands
-#### Info
-```
+```bash
+# Info Commands
 /info user <user>
 /info server
-```
-#### Administrative
-```
+
+# Administrative
 /admin kick <user> <reason>
 /admin ban <user> <reason>
 /admin timeout <user> <length> <reason>
 /admin unban <user> <reason>
-```
-#### Search
-```
+/admin whois <role>
+
+# Search
 /search anime <title>
 /search weather <city>
 /search randcat
 /search randdog
-```
-#### Miscellaneous
-```
+
+# Miscellaneous
 /ping
 /roll <max> <min>
 /split-teams <size>

@@ -133,7 +133,7 @@ module.exports = {
 					interaction.guild.members.fetch(target)
 						.then(member => member.timeout(null))
 						.catch(function(err) {
-							interaction.editReply(`There was an error trying to issue administrative action. Please try again.\n\`\`\`\n${err.message}\n\`\`\``);
+							interaction.editReply(`There was an error trying to remove the timeout. Please try again.\n\`\`\`\n${err.message}\n\`\`\``);
 							console.error(err);
 						});
 				}
@@ -150,7 +150,7 @@ module.exports = {
 					interaction.guild.members.fetch(target)
 						.then(member => member.timeout(parseInt(length * 1000), {reason: reason}))
 						.catch(function(err) {
-							interaction.editReply(`There was an error trying to issue administrative action. Please try again.\n\`\`\`\n${err.message}\n\`\`\``);
+							interaction.editReply(`There was an error trying to issue the timeout. Please try again.\n\`\`\`\n${err.message}\n\`\`\``);
 							console.error(err);
 						});
 
@@ -192,16 +192,22 @@ module.exports = {
 							{name: 'Members', value: trim(roleMembers, 1024)});
 				}
 				else {
-					const hasteLink = await hastebin(roleMembers, 'txt');
+					try {
+						const hasteLink = await hastebin(roleMembers, 'txt');
 
-					embed
-						.setTitle(`Members of ${role.name}`)
-						.setThumbnail(interaction.guild.iconURL())
-						.addFields(
-							{name: 'Role', value: `${role}`, inline: true},
-							{name: 'Count', value: String(interaction.guild.roles.cache.get(role.id).members.size), inline: true},
-							{name: 'Members', value: hasteLink})
-						.setFooter({text: 'Powered by Cypress and Hastebin', iconURL: 'attachment://icon.png'});
+						embed
+							.setTitle(`Members of ${role.name}`)
+							.setThumbnail(interaction.guild.iconURL())
+							.addFields(
+								{name: 'Role', value: `${role}`, inline: true},
+								{name: 'Count', value: String(interaction.guild.roles.cache.get(role.id).members.size), inline: true},
+								{name: 'Members', value: hasteLink})
+							.setFooter({text: 'Powered by Cypress and Hastebin', iconURL: 'attachment://icon.png'});
+					}
+					catch (err) {
+						await interaction.editReply(`There was an error trying to fetch the members of this role. Please try again.\n\`\`\`\n${err.message}\n\`\`\``);
+						console.error(err);
+					}
 				}
 
 				await interaction.editReply({embeds: [embed], files: [icon]});

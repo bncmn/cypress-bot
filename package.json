@@ -9,6 +9,7 @@
   "author": "db",
   "license": "ISC",
   "dependencies": {
+    "dayjs": "^1.11.7",
     "discord.js": "^14.7.1",
     "dotenv": "^16.0.3",
     "hastebin-gen": "^2.0.5",
