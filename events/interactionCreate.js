@@ -6,9 +6,10 @@ module.exports = {
 		if (!interaction.isChatInputCommand()) return;
 
 		const command = interaction.client.commands.get(interaction.commandName);
+		console.log(`[LOG] ${interaction.user.tag} used ${interaction.commandName}.`);
 
 		if (!command) {
-			console.error(`[ERROR] No command found matching >> ${interaction.CommandName} <<`);
+			console.error(`[ERROR] No command found matching ${interaction.CommandName}`);
 			return;
 		}
 
@@ -16,7 +17,7 @@ module.exports = {
 			await command.execute(interaction);
 		}
 		catch (err) {
-			await interaction.reply({content: `Cypress has encountered an error while executing this command. Please try again.\n\`\`\`\n${err.message}\n\`\`\``, ephemeral: true});
+			await interaction.reply({content: `Cypress has encountered an error while executing this command. Please try again.\n\`\`\`\n${err.message}\n\`\`\``});
 			console.error(err);
 		}
 	},
