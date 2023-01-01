@@ -17,7 +17,7 @@ module.exports = {
 			const embed = new EmbedBuilder()
 				.setColor(0xB080FF)
 				.addFields(
-					{name: 'Uptime', value: dayjs.duration(interaction.client.uptime).format(' D [days], H [hrs], m [mins], s [secs]')},
+					{name: 'Uptime', value: dayjs.duration(interaction.client.uptime).format('D[d] H[h] m[m] s[s]')},
 					{name: 'API Latency', value: `${interaction.client.ws.ping}ms`, inline: true},
 					{name: 'Roundtrip Latency', value: `${sent.createdTimestamp - interaction.createdTimestamp}ms`, inline: true})
 				.setTimestamp()
