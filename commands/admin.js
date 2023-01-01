@@ -1,4 +1,4 @@
-const {SlashCommandBuilder, AttachmentBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, Events, PermissionFlagsBits} = require('discord.js');
+const {SlashCommandBuilder, AttachmentBuilder, EmbedBuilder, PermissionFlagsBits} = require('discord.js');
 const hastebin = require('hastebin-gen');
 
 const trim = (str, max) => (str.length > max ? `${str.slice(0, max - 3)}...` : str);
@@ -204,27 +204,7 @@ module.exports = {
 						.setFooter({text: 'Powered by Cypress and Hastebin', iconURL: 'attachment://icon.png'});
 				}
 
-
-				/* const row = new ActionRowBuilder()
-					.addComponents(
-						new ButtonBuilder()
-							.setCustomId('rolesPreviousPage')
-							.setLabel('Previous Page')
-							.setStyle(ButtonStyle.Primary)
-							.setDisabled(true),
-						new ButtonBuilder()
-							.setCustomId('rolesNextPage')
-							.setLabel('Next Page')
-							.setStyle(ButtonStyle.Primary),
-					); */
-
-				await interaction.editReply({embeds: [embed], files: [icon]/* , components: [row] */});
-
-				/* // eslint-disable-next-line no-shadow
-				interaction.client.on(Events.InteractionCreate, interaction => {
-					if (!interaction.isButton()) return;
-					console.log(interaction);
-				}); */
+				await interaction.editReply({embeds: [embed], files: [icon]});
 			}
 
 			if (interaction.options.getSubcommand() == 'addrole') {
