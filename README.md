@@ -58,6 +58,7 @@ Change online status: "online", "idle", "dnd", "invisible"
 /admin timeout <user> <length> <reason>
 /admin unban <user> <reason>
 /admin whois <role>
+/admin purge <messages>
 
 # Search
 /search anime <title>

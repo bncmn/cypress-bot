@@ -44,7 +44,7 @@ module.exports = {
 		await interaction.deferReply();
 
 		try {
-			const channel = interaction.guild.channels.cache.get('930231319663882292');
+			const channel = await interaction.guild.channels.fetch('930231319663882292');
 			const messages = await fetchMore(channel);
 
 			const msgIDs = Array.from(messages.keys());

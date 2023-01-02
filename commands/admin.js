@@ -76,6 +76,14 @@ module.exports = {
 				.setDescription('The role to be added.')
 				.setRequired(true)))
 
+		.addSubcommand(subcommand => subcommand
+			.setName('purge')
+			.setDescription('bulk-deletes messages newer than 14 days.')
+			.addIntegerOption(option => option
+				.setName('messages')
+				.setDescription('The number of messages to be deleted.')
+				.setRequired(true)))
+
 		.setDefaultMemberPermissions(PermissionFlagsBits.KickMembers && PermissionFlagsBits.BanMembers && PermissionFlagsBits.ModerateMembers),
 
 	async execute(interaction) {
@@ -233,6 +241,19 @@ module.exports = {
 				}
 
 				await interaction.editReply({embeds: [embed], files: [icon]});
+			}
+
+			if (interaction.options.getSubcommand() == 'purge') {
+				const messages = interaction.options.getInteger('messages');
+
+				interaction.channel.bulkDelete(messages, {filterOld: true})
+					.then(await interaction.editReply('Deleting messages...'))
+					.catch(err => {
+						console.error(err);
+						throw new Error(err);
+					});
+
+				interaction.channel.send(`Deleted ${messages} message(s) from ${interaction.channel}.`);
 			}
 		}
 		catch (err) {
