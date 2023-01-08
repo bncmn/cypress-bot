@@ -153,7 +153,7 @@ module.exports = {
 					await interaction.editReply({embeds: [embed], files: [icon]});
 				}
 				catch (err) {
-					await interaction.editReply('error');
+					await interaction.editReply(`There was an error while fetching this Wikipedia page. Please try again.\n\`\`\`\n${err.message}\n\`\`\``);
 					console.error(err);
 				}
 			}
