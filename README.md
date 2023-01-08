@@ -63,6 +63,7 @@ Change online status: "online", "idle", "dnd", "invisible"
 # Search
 /search anime <title>
 /search weather <city>
+/search wikipedia <term>
 /search randcat
 /search randdog
 

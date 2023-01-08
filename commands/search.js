@@ -1,5 +1,6 @@
 const {SlashCommandBuilder, AttachmentBuilder, EmbedBuilder} = require('discord.js');
 const {request} = require('undici');
+const wiki = require('wikipedia');
 require('dotenv').config();
 
 const trim = (str, max) => (str.length > max ? `${str.slice(0, max - 3)}...` : str);
@@ -29,6 +30,14 @@ module.exports = {
 			.addStringOption(option => option
 				.setName('city')
 				.setDescription('The city to be searched.')
+				.setRequired(true)))
+
+		.addSubcommand(subcommand => subcommand
+			.setName('wikipedia')
+			.setDescription('retrieves a Wikipedia listing.')
+			.addStringOption(option => option
+				.setName('term')
+				.setDescription('The term to search in Wikipedia.')
 				.setRequired(true)))
 
 		.addSubcommand(subcommand => subcommand
@@ -92,33 +101,61 @@ module.exports = {
 				const result = await request(`https://api.openweathermap.org/data/2.5/weather?${query}`);
 				const data = await result.body.json();
 
-				const embed = new EmbedBuilder()
-					.setColor(0xB080FF)
-					.setTitle(data.name)
-					.setURL(`https://openweathermap.org/city/${data.id}`)
-					.setThumbnail('attachment://openweatherlogo.png')
-					.addFields(
-						{name: 'Current Conditions', value: `**${data.weather[0].main}.** ${data.weather[0].description}.`},
-						{name: 'Temperature', value: `${String(Math.round(data.main.temp - 273.15))}\u00B0C (${String(Math.round(((data.main.temp - 273.15) * 1.8) + 32))}\u00B0F)`, inline: true},
-						{name: 'Feels Like', value: `${String(Math.round(data.main.feels_like - 273.15))}\u00B0C (${String(Math.round(((data.main.feels_like - 273.15) * 1.8) + 32))}\u00B0F)`, inline: true},
-						{name: '\u200b', value: '\u200b', inline: true},
-						{name: 'Daily Low', value: `${String(Math.round(data.main.temp_min - 273.15))}\u00B0C (${String(Math.round(((data.main.temp_min - 273.15) * 1.8) + 32))}\u00B0F)`, inline: true},
-						{name: 'Daily High', value: `${String(Math.round(data.main.temp_max - 273.15))}\u00B0C (${String(Math.round(((data.main.temp_max - 273.15) * 1.8) + 32))}\u00B0F)`, inline: true},
-						{name: '\u200b', value: '\u200b', inline: true},
-						{name: 'Visibility', value: `${data.visibility / 1000}km`},
-						{name: 'Wind', value: `${data.wind.speed}m/s ${degToCompass(data.wind.deg)}`},
-						{name: 'Humidity', value: `${data.main.humidity}%`})
-					.setTimestamp()
-					.setFooter({text: 'Powered by Cypress and OpenWeather', iconURL: 'attachment://icon.png'});
+				if (data.cod == 200) {
+					const embed = new EmbedBuilder()
+						.setColor(0xB080FF)
+						.setTitle(data.name)
+						.setURL(`https://openweathermap.org/city/${data.id}`)
+						.setThumbnail('attachment://openweatherlogo.png')
+						.addFields(
+							{name: 'Current Conditions', value: `**${data.weather[0].main}.** ${data.weather[0].description}.`},
+							{name: 'Temperature', value: `${String(Math.round(data.main.temp - 273.15))}\u00B0C (${String(Math.round(((data.main.temp - 273.15) * 1.8) + 32))}\u00B0F)`, inline: true},
+							{name: 'Feels Like', value: `${String(Math.round(data.main.feels_like - 273.15))}\u00B0C (${String(Math.round(((data.main.feels_like - 273.15) * 1.8) + 32))}\u00B0F)`, inline: true},
+							{name: '\u200b', value: '\u200b', inline: true},
+							{name: 'Daily Low', value: `${String(Math.round(data.main.temp_min - 273.15))}\u00B0C (${String(Math.round(((data.main.temp_min - 273.15) * 1.8) + 32))}\u00B0F)`, inline: true},
+							{name: 'Daily High', value: `${String(Math.round(data.main.temp_max - 273.15))}\u00B0C (${String(Math.round(((data.main.temp_max - 273.15) * 1.8) + 32))}\u00B0F)`, inline: true},
+							{name: '\u200b', value: '\u200b', inline: true},
+							{name: 'Visibility', value: `${data.visibility / 1000}km`},
+							{name: 'Wind', value: `${data.wind.speed}m/s ${degToCompass(data.wind.deg)}`},
+							{name: 'Humidity', value: `${data.main.humidity}%`})
+						.setTimestamp()
+						.setFooter({text: 'Powered by Cypress and OpenWeather', iconURL: 'attachment://icon.png'});
 
-				if (data.rain) {
-					embed.addFields({name: 'Rain (hourly)', value: `${data.rain['1h'] ?? 0}mm`});
-				}
-				if (data.snow) {
-					embed.addFields({name: 'Snow (hourly)', value: `${data.snow['1h'] ?? 0}mm`});
-				}
+					if (data.rain) {
+						embed.addFields({name: 'Rain (hourly)', value: `${data.rain['1h'] ?? 0}mm`});
+					}
+					if (data.snow) {
+						embed.addFields({name: 'Snow (hourly)', value: `${data.snow['1h'] ?? 0}mm`});
+					}
 
-				await interaction.editReply({embeds: [embed], files: [icon, openweatherlogo]});
+					await interaction.editReply({embeds: [embed], files: [icon, openweatherlogo]});
+				}
+				else {
+					await interaction.editReply('No data found for this location. To make a search more precise, put the city\'s name and the 2-letter country code (ISO3166), separated by a comma.');
+				}
+			}
+
+			if (interaction.options.getSubcommand() == 'wikipedia') {
+				const term = interaction.options.getString('term');
+
+				try {
+					const summary = await wiki.summary(term);
+
+					const embed = new EmbedBuilder()
+						.setAuthor({name: 'Wikipedia'})
+						.setTitle(summary.title)
+						.setURL(summary.content_urls.desktop.page)
+						.setImage(summary.originalimage.source)
+						.setDescription(summary.extract)
+						.setTimestamp()
+						.setFooter({text: 'Powered by Cypress and Wikipedia', iconURL: 'attachment://icon.png'});
+
+					await interaction.editReply({embeds: [embed], files: [icon]});
+				}
+				catch (err) {
+					await interaction.editReply('error');
+					console.error(err);
+				}
 			}
 
 			if (interaction.options.getSubcommand() == 'randdog') {
