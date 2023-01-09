@@ -47,13 +47,15 @@ Change online status: "online", "idle", "dnd", "invisible"
 "status": "online"
 ```
 ### Available commands
+These are implemented as application commands (or "slash commands").<br>
 ```bash
-# Info Commands
+# Informational
 /info user <user>
 /info server
 /info whois <role>
 
 # Administrative
+/report <user> <reason> (accessible to everyone)
 /admin kick <user> <reason>
 /admin ban <user> <reason>
 /admin timeout <user> <length> <reason>
@@ -75,5 +77,5 @@ Change online status: "online", "idle", "dnd", "invisible"
 /yvr
 /give-me-a-quote
 ```
-These are implemented as application commands (or "slash commands").<br>
-`/yvr` and `/give-me-a-quote` are purpose-built for my own personal server.
+`/yvr` and `/give-me-a-quote` are purpose-built for my own personal server.<br>
+The current implementation of `/report` has a hard-coded channel ID and will need to be adapted to your own deployment in your server.
