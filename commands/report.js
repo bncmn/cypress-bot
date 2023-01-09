@@ -29,14 +29,14 @@ module.exports = {
 				.addFields(
 					{name: 'Sender', value: `<@${interaction.user.id}>`},
 					{name: 'Reported', value: `<@${interaction.options.getUser('user').id}>`},
-					{name: 'Channel', value: interaction.channelId},
+					{name: 'Channel', value: `<#${interaction.channelId}>`},
 					{name: 'Reason', value: interaction.options.getString('reason')},
 				)
 				.setTimestamp()
 				.setFooter({text: 'Powered by Cypress', iconURL: 'attachment://icon.png'});
 
 			reportChannel.send({embeds: [embed], files: [icon]});
-			await interaction.editReply('Report sent successfully.');
+			await interaction.editReply(`<@${interaction.options.getUser('user').id}> was reported.`);
 		}
 		catch (err) {
 			await interaction.editReply(`There was an error trying to send the report. Please try again.\n\`\`\`\n${err.message}\n\`\`\``);
