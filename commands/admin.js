@@ -1,7 +1,4 @@
 const {SlashCommandBuilder, AttachmentBuilder, EmbedBuilder, PermissionFlagsBits} = require('discord.js');
-const hastebin = require('hastebin-gen');
-
-const trim = (str, max) => (str.length > max ? `${str.slice(0, max - 3)}...` : str);
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -55,14 +52,6 @@ module.exports = {
 			.addStringOption(option => option
 				.setName('reason')
 				.setDescription('The reason for the unban.')))
-
-		.addSubcommand(subcommand => subcommand
-			.setName('whois')
-			.setDescription('lists users with the role.')
-			.addRoleOption(option => option
-				.setName('role')
-				.setDescription('The role to list.')
-				.setRequired(true)))
 
 		.addSubcommand(subcommand => subcommand
 			.setName('addrole')
@@ -177,46 +166,6 @@ module.exports = {
 						{name: 'Issued by', value: `\`${interaction.user.tag}\``});
 
 				interaction.guild.members.unban(target, {reason: reason});
-
-				await interaction.editReply({embeds: [embed], files: [icon]});
-			}
-
-			if (interaction.options.getSubcommand() == 'whois') {
-				const role = interaction.options.getRole('role');
-
-				await interaction.guild.members.fetch();
-
-				const roleMembers = interaction.guild.roles.cache.get(role.id)
-					.members.map(member => `\`${member.user.tag}\``)
-					.join('\n');
-
-				if (roleMembers.length < 1024) {
-					embed
-						.setTitle(`Members of ${role.name}`)
-						.setThumbnail(interaction.guild.iconURL())
-						.addFields(
-							{name: 'Role', value: `${role}`, inline: true},
-							{name: 'Count', value: String(interaction.guild.roles.cache.get(role.id).members.size), inline: true},
-							{name: 'Members', value: trim(roleMembers, 1024)});
-				}
-				else {
-					try {
-						const hasteLink = await hastebin(roleMembers, 'txt');
-
-						embed
-							.setTitle(`Members of ${role.name}`)
-							.setThumbnail(interaction.guild.iconURL())
-							.addFields(
-								{name: 'Role', value: `${role}`, inline: true},
-								{name: 'Count', value: String(interaction.guild.roles.cache.get(role.id).members.size), inline: true},
-								{name: 'Members', value: hasteLink})
-							.setFooter({text: 'Powered by Cypress and Hastebin', iconURL: 'attachment://icon.png'});
-					}
-					catch (err) {
-						await interaction.editReply(`There was an error trying to fetch the members of this role. Please try again.\n\`\`\`\n${err.message}\n\`\`\``);
-						console.error(err);
-					}
-				}
 
 				await interaction.editReply({embeds: [embed], files: [icon]});
 			}

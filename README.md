@@ -51,13 +51,13 @@ Change online status: "online", "idle", "dnd", "invisible"
 # Info Commands
 /info user <user>
 /info server
+/info whois <role>
 
 # Administrative
 /admin kick <user> <reason>
 /admin ban <user> <reason>
 /admin timeout <user> <length> <reason>
 /admin unban <user> <reason>
-/admin whois <role>
 /admin purge <messages>
 
 # Search
