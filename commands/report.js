@@ -17,20 +17,21 @@ module.exports = {
 		await interaction.deferReply();
 
 		try {
+			const icon = new AttachmentBuilder('./assets/icon.png');
+
 			await interaction.client.application.fetch();
 			const reportChannel = interaction.client.channels.cache.get('1002462031036813322');
-
-			const icon = new AttachmentBuilder('./assets/icon.png');
+			const target = interaction.options.getUser('user');
 
 			const embed = new EmbedBuilder()
 				.setColor(0xB080FF)
-				.setTitle('Report Received')
-				.setThumbnail(interaction.options.getUser('user').avatarURL())
+				.setTitle(`${target.tag} has been reported.`)
+				.setThumbnail(target.avatarURL())
 				.addFields(
-					{name: 'Sender', value: `<@${interaction.user.id}>`},
-					{name: 'Reported', value: `<@${interaction.options.getUser('user').id}>`},
-					{name: 'Channel', value: `<#${interaction.channelId}>`},
+					{name: 'User ID', value: `\`${target.id}\``},
 					{name: 'Reason', value: interaction.options.getString('reason')},
+					{name: 'Channel', value: `<#${interaction.channelId}>`},
+					{name: 'Reported by', value: `<@${interaction.user.id}> (ID: \`${interaction.user.id}\`)`},
 				)
 				.setTimestamp()
 				.setFooter({text: 'Powered by Cypress', iconURL: 'attachment://icon.png'});
