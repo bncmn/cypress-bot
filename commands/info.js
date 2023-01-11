@@ -67,7 +67,7 @@ module.exports = {
 				await interaction.reply({embeds: [embed], files: [icon]});
 			}
 
-			else if (interaction.options.getSubcommand() == 'server') {
+			if (interaction.options.getSubcommand() == 'server') {
 				const vcs = interaction.guild.channels.cache.filter(channel => channel.type == 2).size;
 				const tcs = interaction.guild.channels.cache.filter(channel => channel.type == 0).size;
 				const categories = interaction.guild.channels.cache.filter(channel => channel.type == 4).size;

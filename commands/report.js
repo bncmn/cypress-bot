@@ -10,7 +10,7 @@ module.exports = {
 			.setRequired(true))
 		.addStringOption(option => option
 			.setName('reason')
-			.setDescription('The reason for the report,')
+			.setDescription('The reason for the report.')
 			.setRequired(true)),
 
 	async execute(interaction) {
