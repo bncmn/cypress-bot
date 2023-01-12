@@ -38,9 +38,11 @@ module.exports = {
 
 		try {
 			if (interaction.options.getSubcommand() == 'user') {
+				await interaction.guild.fetch();
+
 				let target;
-				if (interaction.options.getUser('user')) {
-					target = interaction.guild.members.cache.get(interaction.options.getUser('user').id);
+				if (interaction.options.getUser('target')) {
+					target = interaction.guild.members.cache.get(interaction.options.getUser('target').id);
 				}
 				else {
 					target = interaction.guild.members.cache.get(interaction.user.id);
@@ -64,7 +66,7 @@ module.exports = {
 					.setTimestamp()
 					.setFooter({text: 'Powered by Cypress', iconURL: 'attachment://icon.png'});
 
-				await interaction.reply({embeds: [embed], files: [icon]});
+				await interaction.editReply({embeds: [embed], files: [icon]});
 			}
 
 			if (interaction.options.getSubcommand() == 'server') {
@@ -90,7 +92,7 @@ module.exports = {
 					.setTimestamp()
 					.setFooter({text: 'Powered by Cypress', iconURL: 'attachment://icon.png'});
 
-				await interaction.reply({embeds: [embed], files: [icon]});
+				await interaction.editReply({embeds: [embed], files: [icon]});
 			}
 
 			if (interaction.options.getSubcommand() == 'whois') {
