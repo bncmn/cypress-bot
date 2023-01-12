@@ -175,7 +175,7 @@ module.exports = {
 
 				if (role.editable) {
 					embed
-						.setTitle(`A role has been given to ${target.tag}.`)
+						.setTitle(`${target.tag} was given a role.`)
 						.setThumbnail(target.avatarURL())
 						.addFields(
 							{name: 'User ID', value: `\`${target.id}\``},
