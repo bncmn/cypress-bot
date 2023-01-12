@@ -72,10 +72,13 @@ These are implemented as application commands (or "slash commands").<br>
 # Miscellaneous
 /ping
 /roll <max> <min>
+/magic8ball <question>
 /split-teams <size>
 /echo (locked to application owner)
 /yvr
 /give-me-a-quote
 ```
-`/yvr` and `/give-me-a-quote` are purpose-built for my own personal server.<br>
-The current implementation of `/report` has a hard-coded channel ID and will need to be adapted to your own deployment in your server.
+### Some notes
+* The current implementation of the magic 8-ball is skewed to give affirmative answers 80% of the time. Non-committal answers and negative answers have a probability of 10% each.
+* `/yvr` and `/give-me-a-quote` are purpose-built for my own personal server.
+* The current implementation of `/report` has a hard-coded channel ID and will need to be adapted to your own deployment in your server.

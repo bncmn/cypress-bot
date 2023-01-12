@@ -13,7 +13,7 @@ const ansAffirm = [
 	'Signs point to yes.',
 ];
 
-const ansAmbiguous = [
+const ansNonCommit = [
 	'Reply hazy, try again.',
 	'Ask again later.',
 	'Better not tell you now.',
@@ -21,7 +21,7 @@ const ansAmbiguous = [
 	'Concentrate and ask again.',
 ];
 
-const ansNegation = [
+const ansNegate = [
 	'Don\'t count on it.',
 	'My reply is no.',
 	'My sources say no.',
@@ -29,6 +29,9 @@ const ansNegation = [
 	'Very doubtful.',
 ];
 
+// Helper function used to determine probability of [Yes / Maybe / No] answers.
+// The array has 10 elements, which determines the probability of each outcome.
+// 0 = Affirmative, 1 = Non-committal, 2 = Negative.
 function weightedRandom() {
 	return [0, 0, 0, 0, 0, 0, 0, 0, 1, 2][Math.floor(Math.random() * 10)];
 }
@@ -40,9 +43,9 @@ function roll8ball() {
 	case 0:
 		return ansAffirm[Math.floor(Math.random() * ansAffirm.length)];
 	case 1:
-		return ansAmbiguous[Math.floor(Math.random() * ansAmbiguous.length)];
+		return ansNonCommit[Math.floor(Math.random() * ansNonCommit.length)];
 	case 2:
-		return ansNegation[Math.floor(Math.random() * ansNegation.length)];
+		return ansNegate[Math.floor(Math.random() * ansNegate.length)];
 	}
 }
 
@@ -60,7 +63,7 @@ module.exports = {
 
 		try {
 			if (interaction.user.id == '288115243790499840') {
-				await interaction.editReply(`${interaction.user} asked: \`${interaction.options.getString('question')}\`\n\nI think: \`${ansNegation[Math.floor(Math.random() * ansNegation.length)]}\``);
+				await interaction.editReply(`${interaction.user} asked: \`${interaction.options.getString('question')}\`\n\nI think: \`${ansNegate[Math.floor(Math.random() * ansNegate.length)]}\``);
 			}
 			else {
 				await interaction.editReply(`${interaction.user} asked: \`${interaction.options.getString('question')}\`\n\nI think: \`${roll8ball()}\``);
