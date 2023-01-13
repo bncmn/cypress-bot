@@ -79,6 +79,6 @@ These are implemented as application commands (or "slash commands").<br>
 /give-me-a-quote
 ```
 ### Some notes
-* The current implementation of `/magic8ball` is weighted to give affirmative answers 50% of the time. Non-committal answers have a 30% chance, and negative answers have a 20% chance.
+* The current implementation of `/magic8ball` is weighted to give affirmative answers 70% of the time. Non-committal answers have a 10% chance, and negative answers have a 20% chance.
 * `/yvr` and `/give-me-a-quote` are purpose-built for my own personal server.
 * The current implementation of `/report` has a hard-coded channel ID and will need to be adapted to your own deployment in your server.
