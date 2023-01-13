@@ -29,22 +29,19 @@ const ansNegate = [
 	'Very doubtful.',
 ];
 
-// Helper function used to determine probability of [Yes / Maybe / No] answers.
-// The array has 10 elements, which determines the probability of each outcome.
-// 0 = Affirmative, 1 = Non-committal, 2 = Negative.
-function weightedRandom() {
-	return [0, 0, 0, 0, 0, 0, 0, 0, 1, 2][Math.floor(Math.random() * 10)];
-}
-
+// roll8ball() implements an extremely rudimentary way of picking, with weights, a random answer.
 function roll8ball() {
-	const n = weightedRandom();
+	// The number of [0/1/2]s in the array determines the probability that one of [Yes/Maybe/No] is selected,
+	// where 0 == Yes, 1 == Maybe, and 2 == No.
+	// i.e. eight zeroes == 80% chance of a 'Yes' answer.
+	const n = [0, 0, 0, 0, 0, 0, 0, 0, 1, 2][Math.floor(Math.random() * 10)];
 
 	switch (n) {
-	case 0:
+	case 0: // Affirmative answer
 		return ansAffirm[Math.floor(Math.random() * ansAffirm.length)];
-	case 1:
+	case 1: // Non-committal answer
 		return ansNonCommit[Math.floor(Math.random() * ansNonCommit.length)];
-	case 2:
+	case 2: // Negative answer
 		return ansNegate[Math.floor(Math.random() * ansNegate.length)];
 	}
 }
