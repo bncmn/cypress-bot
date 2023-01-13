@@ -34,7 +34,7 @@ function roll8ball() {
 	// The number of [0/1/2]s in the array determines the probability that one of [Yes/Maybe/No] is selected,
 	// where 0 == Yes, 1 == Maybe, and 2 == No.
 	// i.e. eight zeroes == 80% chance of a 'Yes' answer.
-	const n = [0, 0, 0, 0, 0, 0, 0, 0, 1, 2][Math.floor(Math.random() * 10)];
+	const n = [0, 0, 0, 0, 0, 1, 1, 1, 2, 2][Math.floor(Math.random() * 10)];
 
 	switch (n) {
 	case 0: // Affirmative answer
@@ -49,22 +49,17 @@ function roll8ball() {
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('magic8ball')
-		.setDescription('answers life\'s most difficult questions. (Yes or no questions only)')
+		.setDescription('answers life\'s most difficult questions. (\'Yes\' or \'No\' questions only)')
 		.addStringOption(option => option
 			.setName('question')
-			.setDescription('The question to ask to the magic 8-ball.')
+			.setDescription('The question to ask Cypress.')
 			.setRequired(true)),
 
 	async execute(interaction) {
 		await interaction.deferReply();
 
 		try {
-			if (interaction.user.id == '288115243790499840') {
-				await interaction.editReply(`${interaction.user} asked me: \`${interaction.options.getString('question')}\`\n\n${ansNegate[Math.floor(Math.random() * ansNegate.length)]}`);
-			}
-			else {
-				await interaction.editReply(`${interaction.user} asked: \`${interaction.options.getString('question')}\`\n\n${roll8ball()}`);
-			}
+			await interaction.editReply(`${interaction.user} asked: \`${interaction.options.getString('question')}\`\n\n${roll8ball()}`);
 		}
 		catch (err) {
 			await interaction.editReply(`There was an error trying to roll. Please try again.\n\`\`\`\n${err.message}\n\`\`\``);
