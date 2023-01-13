@@ -49,7 +49,7 @@ function roll8ball() {
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('magic8ball')
-		.setDescription('answers life\'s most difficult questions.')
+		.setDescription('answers life\'s most difficult questions. (Yes or no questions only)')
 		.addStringOption(option => option
 			.setName('question')
 			.setDescription('The question to ask to the magic 8-ball.')
@@ -60,10 +60,10 @@ module.exports = {
 
 		try {
 			if (interaction.user.id == '288115243790499840') {
-				await interaction.editReply(`${interaction.user} asked: \`${interaction.options.getString('question')}\`\n\nI think: \`${ansNegate[Math.floor(Math.random() * ansNegate.length)]}\``);
+				await interaction.editReply(`${interaction.user} asked me: \`${interaction.options.getString('question')}\`\n\n${ansNegate[Math.floor(Math.random() * ansNegate.length)]}`);
 			}
 			else {
-				await interaction.editReply(`${interaction.user} asked: \`${interaction.options.getString('question')}\`\n\nI think: \`${roll8ball()}\``);
+				await interaction.editReply(`${interaction.user} asked: \`${interaction.options.getString('question')}\`\n\n${roll8ball()}`);
 			}
 		}
 		catch (err) {
