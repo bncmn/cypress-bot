@@ -34,7 +34,7 @@ function roll8ball() {
 	// The number of [0/1/2]s in the array determines the probability that one of [Yes/Maybe/No] is selected,
 	// where 0 == Yes, 1 == Maybe, and 2 == No.
 	// i.e. eight zeroes == 80% chance of a 'Yes' answer.
-	const n = [0, 0, 0, 0, 0, 0, 0, 1, 2, 2][Math.floor(Math.random() * 10)];
+	const n = [0, 1, 2, 2, 2, 2, 2, 2, 2, 2][Math.floor(Math.random() * 10)];
 
 	switch (n) {
 	case 0: // Affirmative answer
