@@ -58,22 +58,25 @@ These are implemented as application commands (or "slash commands").<br>
 /report <user> <reason> (accessible to everyone)
 /admin kick <user> <reason>
 /admin ban <user> <reason>
-/admin timeout <user> <length> <reason>
 /admin unban <user> <reason>
 /admin purge <messages>
+/admin timeout <user> <length> <reason>
 
 # Search
 /search anime <title>
 /search weather <city>
 /search wikipedia <term>
-/search randcat
 /search randdog
+/search randcat
+
+# Randomizers
+/roll <max> <min>
+/split-teams <size>
+/magic8ball <question>
+/pickone <option 1> <option 2> <option 3> <option 4> <option 5>
 
 # Miscellaneous
 /ping
-/roll <max> <min>
-/magic8ball <question>
-/split-teams <size>
 /echo (locked to application owner)
 /yvr
 /give-me-a-quote
