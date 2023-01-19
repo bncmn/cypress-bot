@@ -119,7 +119,7 @@ module.exports = {
 			if (interaction.options.getSubcommand() == 'picker') {
 				try {
 					const options = interaction.options.data[0].options.map(option => option.value);
-					await interaction.editReply(`${interaction.user} needs help picking from: \`${options}\`\n\n I pick: \`${options[Math.floor(Math.random() * options.length)]}\``);
+					await interaction.editReply(`${interaction.user} needs help picking from: \`${options}\`\n\n I pick \`${options[Math.floor(Math.random() * options.length)]}\`.`);
 				}
 				catch (err) {
 					await interaction.editReply(`There was an error trying to pick. Please try again.\n\`\`\`\n${err.message}\n\`\`\``);
