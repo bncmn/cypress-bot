@@ -3,24 +3,24 @@ const {SlashCommandBuilder} = require('discord.js');
 module.exports = {
 	data : new SlashCommandBuilder()
 		.setName('pickone')
-		.setDescription('picks a random item from a provided list.')
+		.setDescription('picks a random option from a provided list (Minimum of 2 options, maximum of 5).')
 		.addStringOption(option => option
 			.setName('option1')
-			.setDescription('The first item.')
+			.setDescription('The first option.')
 			.setRequired(true))
 		.addStringOption(option => option
 			.setName('option2')
-			.setDescription('The first item.')
+			.setDescription('The second option.')
 			.setRequired(true))
 		.addStringOption(option => option
 			.setName('option3')
-			.setDescription('The first item.'))
+			.setDescription('A third option.'))
 		.addStringOption(option => option
 			.setName('option4')
-			.setDescription('The first item.'))
+			.setDescription('A fourth option.'))
 		.addStringOption(option => option
 			.setName('option5')
-			.setDescription('The first item.')),
+			.setDescription('A fifth option.')),
 
 	async execute(interaction) {
 		await interaction.deferReply();
