@@ -41,11 +41,11 @@ module.exports = {
 				.setRequired(true)))
 
 		.addSubcommand(subcommand => subcommand
-			.setName('randomdog')
+			.setName('randdog')
 			.setDescription('fetches a random dog picture.'))
 
 		.addSubcommand(subcommand => subcommand
-			.setName('randomcat')
+			.setName('randcat')
 			.setDescription('fetches a random cat picture.')),
 
 	async execute(interaction) {
