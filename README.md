@@ -50,12 +50,12 @@ Change online status: "online", "idle", "dnd", "invisible"
 Below are the commands that Cypress currently has. These are implemented as application commands (or "slash commands").<br>
 The files that contain their definitions are also listed.
 ```bash
-# Informational (info.js)
+# Informational (in info.js)
 /info user <user>
 /info server
 /info whois <role>
 
-# Administrative (admin.js)
+# Administrative (in admin.js)
 /report <user> <reason>                       # (report.js)
 /admin kick <user> <reason>
 /admin ban <user> <reason>
@@ -63,18 +63,18 @@ The files that contain their definitions are also listed.
 /admin purge <messages>
 /admin timeout <user> <length> <reason>
 
-# Search (search.js)
+# Search (in search.js)
 /search anime <title>
 /search weather <city>
 /search wikipedia <term>
 /search randdog
 /search randcat
 
-# Randomizers 
-/roll <max> <min>                             # (roll.js)
+# Randomizers (in randomizer.js)
+/roll <max> <min>
+/magic8ball <question> 
+/pickone <opt1> <opt2> <opt3> <opt4> <opt5>
 /split-teams <size>                           # (splitteams.js)
-/magic8ball <question>                        # (8ball.js)    
-/pickone <opt1> <opt2> <opt3> <opt4> <opt5>   # (pickone.js)
 
 # Miscellaneous
 /ping                                         # (ping.js)
@@ -83,6 +83,6 @@ The files that contain their definitions are also listed.
 /give-me-a-quote                              # (fetchquote.js)
 ```
 ### Some notes
-* The current implementation of `/magic8ball` can be skewed to favour certain types of responses. The comments for `roll8ball()` in `8ball.js` describe this functionality in detail.
+* The current implementation of `/magic8ball` can be skewed to favour certain types of responses. The comments for `roll8ball()` in `randomizer.js` describe this functionality in detail.
 * `/yvr` and `/give-me-a-quote` are purpose-built for my own personal server.
 * The current implementation of `/report` in `report.js` has a hard-coded channel ID and will need to be adapted to your own deployment in your server. I might consider implementing something that allows you to set the report channel within your server instead of having to set it within the code.
