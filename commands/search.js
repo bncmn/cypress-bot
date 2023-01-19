@@ -45,7 +45,7 @@ module.exports = {
 			.setDescription('fetches a random dog picture.'))
 
 		.addSubcommand(subcommand => subcommand
-			.setName('randcat')
+			.setName('randomCat')
 			.setDescription('fetches a random cat picture.')),
 
 	async execute(interaction) {
