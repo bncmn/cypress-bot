@@ -1,7 +1,9 @@
 const {SlashCommandBuilder} = require('discord.js');
 
 function randNum(min, max) {
-	return Math.floor(Math.random() * (Math.floor(max) - Math.floor(min) + 1));
+	min = Math.ceil(min);
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 // roll8ball() implements an extremely rudimentary way of picking, with weights, a random answer.
