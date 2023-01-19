@@ -47,41 +47,42 @@ Change online status: "online", "idle", "dnd", "invisible"
 "status": "online"
 ```
 ### Available commands
-These are implemented as application commands (or "slash commands").<br>
+Below are the commands that Cypress currently has. These are implemented as application commands (or "slash commands").<br>
+The files that contain their definitions are also listed.
 ```bash
-# Informational
+# Informational (info.js)
 /info user <user>
 /info server
 /info whois <role>
 
-# Administrative
-/report <user> <reason> (accessible to everyone)
+# Administrative (admin.js)
+/report <user> <reason>                       # (report.js)
 /admin kick <user> <reason>
 /admin ban <user> <reason>
 /admin unban <user> <reason>
 /admin purge <messages>
 /admin timeout <user> <length> <reason>
 
-# Search
+# Search (search.js)
 /search anime <title>
 /search weather <city>
 /search wikipedia <term>
 /search randdog
 /search randcat
 
-# Randomizers
-/roll <max> <min>
-/split-teams <size>
-/magic8ball <question>
-/pickone <option 1> <option 2> <option 3> <option 4> <option 5>
+# Randomizers 
+/roll <max> <min>                             # (roll.js)
+/split-teams <size>                           # (splitteams.js)
+/magic8ball <question>                        # (8ball.js)    
+/pickone <opt1> <opt2> <opt3> <opt4> <opt5>   # (pickone.js)
 
 # Miscellaneous
-/ping
-/echo (locked to application owner)
-/yvr
-/give-me-a-quote
+/ping                                         # (ping.js)
+/echo (locked to application owner)           # (echo.js)
+/yvr                                          # (yvr.js)
+/give-me-a-quote                              # (fetchquote.js)
 ```
 ### Some notes
 * The current implementation of `/magic8ball` can be skewed to favour certain types of responses. The comments for `roll8ball()` in `8ball.js` describe this functionality in detail.
 * `/yvr` and `/give-me-a-quote` are purpose-built for my own personal server.
-* The current implementation of `/report` has a hard-coded channel ID and will need to be adapted to your own deployment in your server.
+* The current implementation of `/report` in `report.js` has a hard-coded channel ID and will need to be adapted to your own deployment in your server. I might consider implementing something that allows you to set the report channel within your server instead of having to set it within the code.
