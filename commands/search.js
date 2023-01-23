@@ -139,14 +139,14 @@ module.exports = {
 				const term = interaction.options.getString('term');
 
 				try {
-					const summary = await wiki.summary(term);
+					const wikiSummary = await wiki.summary(term);
 
 					const embed = new EmbedBuilder()
 						.setAuthor({name: 'Wikipedia'})
-						.setTitle(summary.title)
-						.setURL(summary.content_urls.desktop.page)
-						.setImage(summary.originalimage.source)
-						.setDescription(summary.extract)
+						.setTitle(wikiSummary.title)
+						.setURL(wikiSummary.content_urls.desktop.page)
+						.setImage(wikiSummary.originalimage.source)
+						.setDescription(wikiSummary.extract)
 						.setTimestamp()
 						.setFooter({text: 'Powered by Cypress and Wikipedia', iconURL: 'attachment://icon.png'});
 
