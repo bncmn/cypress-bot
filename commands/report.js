@@ -25,7 +25,7 @@ module.exports = {
 
 			const embed = new EmbedBuilder()
 				.setColor(0xB080FF)
-				.setTitle(`${target.tag} has been reported.`)
+				.setTitle(`A report against ${target.tag} has been received.`)
 				.setThumbnail(target.avatarURL())
 				.addFields(
 					{name: 'User ID', value: `\`${target.id}\``},
