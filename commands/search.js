@@ -41,11 +41,11 @@ module.exports = {
 				.setRequired(true)))
 
 		.addSubcommand(subcommand => subcommand
-			.setName('randdog')
+			.setName('dogpic')
 			.setDescription('fetches a random dog picture.'))
 
 		.addSubcommand(subcommand => subcommand
-			.setName('randomcat')
+			.setName('catpic')
 			.setDescription('fetches a random cat picture.')),
 
 	async execute(interaction) {
@@ -117,16 +117,11 @@ module.exports = {
 							{name: '\u200b', value: '\u200b', inline: true},
 							{name: 'Visibility', value: `${data.visibility / 1000}km`},
 							{name: 'Wind', value: `${data.wind.speed}m/s ${degToCompass(data.wind.deg)}`},
-							{name: 'Humidity', value: `${data.main.humidity}%`})
+							{name: 'Humidity', value: `${data.main.humidity}%`},
+							{name: 'Rain (hourly)', value: `${data.rain ? data.rain['1h'] : 0}mm`},
+							{name: 'Snow (hourly)', value: `${data.snow ? data.snow['1h'] : 0}mm`})
 						.setTimestamp()
 						.setFooter({text: 'Powered by Cypress and OpenWeather', iconURL: 'attachment://icon.png'});
-
-					if (data.rain) {
-						embed.addFields({name: 'Rain (hourly)', value: `${data.rain['1h'] ?? 0}mm`});
-					}
-					if (data.snow) {
-						embed.addFields({name: 'Snow (hourly)', value: `${data.snow['1h'] ?? 0}mm`});
-					}
 
 					await interaction.editReply({embeds: [embed], files: [icon, openweatherlogo]});
 				}
@@ -145,7 +140,7 @@ module.exports = {
 						.setAuthor({name: 'Wikipedia'})
 						.setTitle(wikiSummary.title)
 						.setURL(wikiSummary.content_urls.desktop.page)
-						.setImage(wikiSummary.originalimage.source)
+						.setImage(wikiSummary.originalimage?.source)
 						.setDescription(wikiSummary.extract)
 						.setTimestamp()
 						.setFooter({text: 'Powered by Cypress and Wikipedia', iconURL: 'attachment://icon.png'});
