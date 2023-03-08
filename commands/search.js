@@ -153,7 +153,7 @@ module.exports = {
 				}
 			}
 
-			if (interaction.options.getSubcommand() == 'randdog') {
+			if (interaction.options.getSubcommand() == 'dogpic') {
 				const result = await request('https://random.dog/woof.json');
 				const data = await result.body.json();
 
@@ -166,7 +166,7 @@ module.exports = {
 				await interaction.editReply({embeds: [embed], files: [icon]});
 			}
 
-			if (interaction.options.getSubcommand() == 'randcat') {
+			if (interaction.options.getSubcommand() == 'catpic') {
 				const result = await request('https://shibe.online/api/cats?count=1');
 				const data = await result.body.json();
 
