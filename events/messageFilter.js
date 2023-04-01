@@ -4,7 +4,8 @@ const {EmbedBuilder, AttachmentBuilder} = require('discord.js');
 module.exports = {
 	name: Events.MessageCreate,
 	async execute(message) {
-		function containsChampion(inputString) {
+		function containsReferencesToLeague(inputString) {
+			const filterRegex = new RegExp(/\b([Ll]([Ee]{1,2}|[Ee]?[Gg])([Uu][Ee])?(\s+[Oo][Ff]\s+[Ll][Ee][Gg][Ee][Nn][Dd][Ss])?|[Ll][Ee][Aa]*[Gg][Uu][Ee]|[Ll][Oo][Ll]|[Ll][Ee][Ee][Gg]|l(?:3[e3]g|3(?:[e3]|[a4]g|agu[e3])|[1i]33g)?|\b[Ll][Ee][Gg]?[Ee]?\b|\b[Ll][Gg][Ee]?\b|\blg of lgnds\b)\b/gm);
 			const champions = [
 				'Aatrox',
 				'Ahri',
@@ -160,17 +161,34 @@ module.exports = {
 				'Zoe',
 				'Zyra',
 			];
+			const otherTerms = [
+				'TFT',
+				'ARAM',
+				'Summoner\'s Rift',
+				'Summoners Rift',
+				'Howling Abyss',
+				'Teamfight Tactics',
+				'Riot Games',
+				'Riot',
+				'ADC',
+			];
 
-			return champions.some(champion => inputString.toLowerCase().includes(champion.toLowerCase()));
+			const booleanReturned =
+        champions.some(champion => inputString.toLowerCase().includes(champion.toLowerCase()))
+        || otherTerms.some(term => inputString.toLowerCase().includes(term.toLowerCase()))
+        || filterRegex.test(inputString)
+        || message.mentions.roles.has('704075301147115552');
+
+			return booleanReturned;
 		}
 
 		// Regex is hardcoded as this is mainly for an april fools event.
 		// filterRegex can be changed to something else (must be a regex).
 		// eslint-disable-next-line no-control-regex, no-useless-escape
-		const filterRegex = new RegExp(/\b([Ll]([Ee]{1,2}|[Ee]?[Gg])([Uu][Ee])?(\s+[Oo][Ff]\s+[Ll][Ee][Gg][Ee][Nn][Dd][Ss])?|[Ll][Ee][Aa]*[Gg][Uu][Ee]|[Ll][Oo][Ll]|[Ll][Ee][Ee][Gg]|l(?:3[e3]g|3(?:[e3]|[a4]g|agu[e3])|[1i]33g)?|\b[Ll][Ee][Gg]?[Ee]?\b|\b[Ll][Gg][Ee]?\b|\blg of lgnds\b)\b/gm);
+
 
 		// Checking mentions is also part of the april fools event.
-		if (filterRegex.test(message.content) || message.mentions.roles.has('704075301147115552') || containsChampion(message.content)) {
+		if (containsReferencesToLeague(message.content)) {
 			console.log(`[LOG] ${message.author.tag} triggered a regex filter or has mentioned a role covered by the regex.`);
 
 			try {
@@ -178,10 +196,10 @@ module.exports = {
 
 				const icon = new AttachmentBuilder('./assets/icon.png');
 				const embed = new EmbedBuilder()
-					.setTitle(`${message.author.tag} has been muted for 60 seconds.`)
+					.setTitle(`${message.author.tag} has been timed-out for 60 seconds.`)
 					.setThumbnail(target.user.avatarURL())
-					.setDescription(`As of April 1, 2023, discussion about League of Legends has been prohibited in this server. Please read the announcements channel for more info.\n
-                           This bot operates based on pre-configured filters, and may not be 100% accurate. If you believe this was an error, please let the bot's developer know.`)
+					.setDescription(`Discussion about League of Legends has been prohibited in this server as of 2023/04/01. Please read the announcements channel for more info.\n
+                           This bot uses pre-configured filters to detect League terms, and may not be 100% accurate. If you believe your time-out was an error, please let the Cypress developer know.`)
 					.addFields(
 						{name: 'User ID', value: `\`${target.id}\``},
 						{name: 'Message Contents:', value: `\`\`\`${message}\`\`\``})
