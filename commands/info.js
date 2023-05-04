@@ -1,5 +1,6 @@
 const {SlashCommandBuilder, AttachmentBuilder, EmbedBuilder} = require('discord.js');
-const hastebin = require('hastebin-gen');
+const {PasteClient, Publicity, ExpireDate} = require('pastebin-api');
+const client = new PasteClient(process.env.pastebin_key);
 
 function convert(timestamp) {
 	return Math.round(timestamp / 1000);
@@ -29,7 +30,15 @@ module.exports = {
 			.addRoleOption(option => option
 				.setName('role')
 				.setDescription('The role to list.')
-				.setRequired(true))),
+				.setRequired(true)))
+
+		.addSubcommand(subcommand => subcommand
+			.setName('joindate')
+			.setDescription('lists members in ascending order of their join date.'))
+
+		.addSubcommand(subcommand => subcommand
+			.setName('accountage')
+			.setDescription('lists members in ascending order of their account age.')),
 
 	async execute(interaction) {
 		await interaction.deferReply();
@@ -119,7 +128,13 @@ module.exports = {
 				}
 				else {
 					try {
-						const hasteLink = await hastebin(roleMembers, 'txt');
+						const pasteLink = await client.createPaste({
+							code: roleMembers,
+							expireDate: ExpireDate.OneHour,
+							format: 'gettext',
+							name: 'Role Members List',
+							publicity: Publicity.Unlisted,
+						});
 
 						embed
 							.setTitle(`Members of ${role.name}`)
@@ -127,14 +142,68 @@ module.exports = {
 							.addFields(
 								{name: 'Role', value: `${role}`, inline: true},
 								{name: 'Count', value: String(interaction.guild.roles.cache.get(role.id).members.size), inline: true},
-								{name: 'Members', value: hasteLink})
-							.setFooter({text: 'Powered by Cypress and Hastebin', iconURL: 'attachment://icon.png'});
+								{name: 'Members', value: pasteLink})
+							.setFooter({text: 'Powered by Cypress and Pastebin', iconURL: 'attachment://icon.png'});
 					}
 					catch (err) {
 						await interaction.editReply(`There was an error trying to fetch the members of this role. Please try again.\n\`\`\`\n${err.message}\n\`\`\``);
 						console.error(err);
 					}
 				}
+
+				await interaction.editReply({embeds: [embed], files: [icon]});
+			}
+
+			if (interaction.options.getSubcommand() == 'joindate') {
+				await interaction.guild.members.fetch();
+				const members = interaction.guild.members.cache
+					.sort(function(a, b) {return a.joinedTimestamp - b.joinedTimestamp;})
+					.map(member => `${member.user.tag} - ${new Date(member.joinedTimestamp)}`)
+					.join('\n');
+
+				const pasteLink = await client.createPaste({
+					code: members,
+					expireDate: ExpireDate.OneHour,
+					format: 'bash',
+					name: 'Members by Join Date',
+					publicity: Publicity.Unlisted,
+				});
+
+				const embed = new EmbedBuilder()
+					.setColor(0xB080FF)
+					.setTimestamp()
+					.setFooter({text: 'Powered by Cypress and Pastebin', iconURL: 'attachment://icon.png'})
+					.setTitle('Members by Join Date')
+					.setThumbnail(interaction.guild.iconURL())
+					.addFields(
+						{name: 'Members', value: pasteLink});
+
+				await interaction.editReply({embeds: [embed], files: [icon]});
+			}
+
+			if (interaction.options.getSubcommand() == 'accountage') {
+				await interaction.guild.members.fetch();
+				const members = interaction.guild.members.cache
+					.sort(function(a, b) {return a.user.createdTimestamp - b.user.createdTimestamp;})
+					.map(member => `${member.user.tag} - ${new Date(member.user.createdTimestamp)}`)
+					.join('\n');
+
+				const pasteLink = await client.createPaste({
+					code: members,
+					expireDate: ExpireDate.OneHour,
+					format: 'gettext',
+					name: 'Members by Account Age',
+					publicity: Publicity.Unlisted,
+				});
+
+				const embed = new EmbedBuilder()
+					.setColor(0xB080FF)
+					.setTimestamp()
+					.setFooter({text: 'Powered by Cypress and Pastebin', iconURL: 'attachment://icon.png'})
+					.setTitle('Members by Account Age')
+					.setThumbnail(interaction.guild.iconURL())
+					.addFields(
+						{name: 'Members', value: pasteLink});
 
 				await interaction.editReply({embeds: [embed], files: [icon]});
 			}

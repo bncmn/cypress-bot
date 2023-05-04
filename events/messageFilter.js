@@ -4,6 +4,10 @@ const {EmbedBuilder, AttachmentBuilder} = require('discord.js');
 module.exports = {
 	name: Events.MessageCreate,
 	async execute(message) {
+		// Regex is hardcoded as this is mainly for an april fools event.
+		// filterRegex can be changed to something else (must be a regex).
+		// Checking mentions is also part of the april fools event.
+		// eslint-disable-next-line no-unused-vars
 		function containsReferencesToLeague(inputString) {
 			const filterRegex = new RegExp(/\b([Ll]([Ee]{1,2}|[Ee]?[Gg])([Uu][Ee])?(\s+[Oo][Ff]\s+[Ll][Ee][Gg][Ee][Nn][Dd][Ss])?|[Ll][Ee][Aa]*[Gg][Uu][Ee]|[Ll][Oo][Ll]|[Ll][Ee][Ee][Gg]|l(?:3[e3]g|3(?:[e3]|[a4]g|agu[e3])|[1i]33g)?|\b[Ll][Ee][Gg]?[Ee]?\b|\b[Ll][Gg][Ee]?\b|\blg of lgnds\b)\b/gm);
 			const champions = [
@@ -171,6 +175,9 @@ module.exports = {
 				'Riot Games',
 				'Riot',
 				'ADC',
+				'Rift',
+				'gank',
+				'legends',
 			];
 
 			const booleanReturned =
@@ -182,43 +189,47 @@ module.exports = {
 			return booleanReturned;
 		}
 
-		// Regex is hardcoded as this is mainly for an april fools event.
-		// filterRegex can be changed to something else (must be a regex).
-		// eslint-disable-next-line no-control-regex, no-useless-escape
+		// The filter is currently disabled in its present state, use the next line to enable the filter.
+		// if (containsReferencesToLeague(message.content)) {
 
-
-		// Checking mentions is also part of the april fools event.
-		if (containsReferencesToLeague(message.content)) {
+		// eslint-disable-next-line no-constant-condition
+		if (false) {
 			console.log(`[LOG] ${message.author.tag} triggered a regex filter or has mentioned a role covered by the regex.`);
 
-			try {
-				const target = await message.guild.members.fetch(message.member);
+			await message.client.application.fetch();
+			if (!(message.member.id == '227554246822723595')) {
+				try {
+					const target = await message.guild.members.fetch(message.member);
 
-				const icon = new AttachmentBuilder('./assets/icon.png');
-				const embed = new EmbedBuilder()
-					.setTitle(`${message.author.tag} has been timed-out for 60 seconds.`)
-					.setThumbnail(target.user.avatarURL())
-					.setDescription(`Discussion about League of Legends has been prohibited in this server as of 2023/04/01. Please read the announcements channel for more info.\n
+					const icon = new AttachmentBuilder('./assets/icon.png');
+					const embed = new EmbedBuilder()
+						.setTitle(`${message.author.tag} has been timed-out for 60 seconds.`)
+						.setThumbnail(target.user.avatarURL())
+						.setDescription(`Discussion about League of Legends has been prohibited in this server as of 2023/04/01. Please read the announcements channel for more info.\n
                            This bot uses pre-configured filters to detect League terms, and may not be 100% accurate. If you believe your time-out was an error, please let the Cypress developer know.`)
-					.addFields(
-						{name: 'User ID', value: `\`${target.id}\``},
-						{name: 'Message Contents:', value: `\`\`\`${message}\`\`\``})
-					.setColor(0xB080FF)
-					.setTimestamp()
-					.setFooter({text: 'Powered by Cypress', iconURL: 'attachment://icon.png'});
+						.addFields(
+							{name: 'User ID', value: `\`${target.id}\``},
+							{name: 'Message Contents:', value: `\`\`\`${message}\`\`\``})
+						.setColor(0xB080FF)
+						.setTimestamp()
+						.setFooter({text: 'Powered by Cypress', iconURL: 'attachment://icon.png'});
 
 
-				message.guild.members.fetch(message.member)
-					.then(member => member.timeout(60000, {reason: 'Using a filtered word.'}))
-					.catch(function(err) {
-						console.error(err);
-					});
+					message.guild.members.fetch(message.member)
+						.then(member => member.timeout(60000, {reason: 'Using a filtered word.'}))
+						.catch(function(err) {
+							console.error(err);
+						});
 
-				message.delete();
-				message.channel.send({embeds: [embed], files: [icon]});
+					message.delete();
+					message.channel.send({embeds: [embed], files: [icon]});
+				}
+				catch (err) {
+					console.error(err);
+				}
 			}
-			catch (err) {
-				console.error(err);
+			else {
+				console.log(`[LOG] ${message.author.tag} was the owner of the bot and the filter was not applied.`);
 			}
 		}
 	},

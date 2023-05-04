@@ -18,7 +18,7 @@ module.exports = {
 
 		try {
 			await interaction.client.application.fetch();
-			if (interaction.user.id === interaction.client.application.owner.id) {
+			if (interaction.user.id === '227554246822723595') {
 				const channel = interaction.client.channels.cache.get(interaction.options.getChannel('channel').id);
 				channel.send(interaction.options.getString('message'));
 				await interaction.editReply({content: `Message sent to ${channel}.`});
