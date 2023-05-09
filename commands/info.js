@@ -33,12 +33,8 @@ module.exports = {
 				.setRequired(true)))
 
 		.addSubcommand(subcommand => subcommand
-			.setName('joindate')
-			.setDescription('lists members in ascending order of their join date.'))
-
-		.addSubcommand(subcommand => subcommand
-			.setName('accountage')
-			.setDescription('lists members in ascending order of their account age.')),
+			.setName('aggregatedmembers')
+			.setDescription('lists members in ascending order by join/creation date.')),
 
 	async execute(interaction) {
 		await interaction.deferReply();
@@ -154,42 +150,28 @@ module.exports = {
 				await interaction.editReply({embeds: [embed], files: [icon]});
 			}
 
-			if (interaction.options.getSubcommand() == 'joindate') {
+			if (interaction.options.getSubcommand() == 'aggregatedmembers') {
 				await interaction.guild.members.fetch();
-				const members = interaction.guild.members.cache
+				const membersByJoined = interaction.guild.members.cache
 					.sort(function(a, b) {return a.joinedTimestamp - b.joinedTimestamp;})
 					.map(member => `${member.user.tag} - ${new Date(member.joinedTimestamp)}`)
 					.join('\n');
 
-				const pasteLink = await client.createPaste({
-					code: members,
+				const linkByJoined = await client.createPaste({
+					code: membersByJoined,
 					expireDate: ExpireDate.OneHour,
-					format: 'bash',
+					format: 'gettext',
 					name: 'Members by Join Date',
 					publicity: Publicity.Unlisted,
 				});
 
-				const embed = new EmbedBuilder()
-					.setColor(0xB080FF)
-					.setTimestamp()
-					.setFooter({text: 'Powered by Cypress and Pastebin', iconURL: 'attachment://icon.png'})
-					.setTitle('Members by Join Date')
-					.setThumbnail(interaction.guild.iconURL())
-					.addFields(
-						{name: 'Members', value: pasteLink});
-
-				await interaction.editReply({embeds: [embed], files: [icon]});
-			}
-
-			if (interaction.options.getSubcommand() == 'accountage') {
-				await interaction.guild.members.fetch();
-				const members = interaction.guild.members.cache
+				const membersByCreated = interaction.guild.members.cache
 					.sort(function(a, b) {return a.user.createdTimestamp - b.user.createdTimestamp;})
 					.map(member => `${member.user.tag} - ${new Date(member.user.createdTimestamp)}`)
 					.join('\n');
 
-				const pasteLink = await client.createPaste({
-					code: members,
+				const linkByCreated = await client.createPaste({
+					code: membersByCreated,
 					expireDate: ExpireDate.OneHour,
 					format: 'gettext',
 					name: 'Members by Account Age',
@@ -200,10 +182,11 @@ module.exports = {
 					.setColor(0xB080FF)
 					.setTimestamp()
 					.setFooter({text: 'Powered by Cypress and Pastebin', iconURL: 'attachment://icon.png'})
-					.setTitle('Members by Account Age')
+					.setTitle('Aggregated List of Members')
 					.setThumbnail(interaction.guild.iconURL())
 					.addFields(
-						{name: 'Members', value: pasteLink});
+						{name: 'By Join Date', value: linkByJoined},
+						{name: 'By Creation Date', value: linkByCreated});
 
 				await interaction.editReply({embeds: [embed], files: [icon]});
 			}

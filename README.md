@@ -48,12 +48,13 @@ Change online status: "online", "idle", "dnd", "invisible"
 ```
 ### Available commands
 Below are the commands that Cypress currently has. These are implemented as application commands (or "slash commands").<br>
-The files that contain their definitions are also listed.
+The files that contain their definitions (inside `/commands/`) are also listed.
 ```bash
 # Informational (in info.js)
 /info user <user>
 /info server
 /info whois <role>
+/info aggregatedmembers
 
 # Administrative (in admin.js)
 /report <user> <reason>                       # (report.js)
@@ -82,6 +83,8 @@ The files that contain their definitions are also listed.
 /yvr                                          # (yvr.js)
 /give-me-a-quote                              # (fetchquote.js)
 ```
+### Message Filter
+This bot implements a message filter that can be configured through `/events/messageFilter.js`. As I originally implemented this feature as part of an April fools event in my server, the current filter (implemented in the `containsReferencesToLeague(inputString)` function) tracks usages of terms related to the game "League of Legends". You can change this function (and its name) to fit your use-case. Currently, this feature is (hastily) disabled.
 ### Some notes
 * The current implementation of `/magic8ball` can be skewed to favour certain types of responses. The comments for `roll8ball()` in `randomizer.js` describe this functionality in detail.
 * `/yvr` and `/give-me-a-quote` are purpose-built for my own personal server.
