@@ -189,11 +189,11 @@ module.exports = {
 			return booleanReturned;
 		}
 
-		// The filter is currently disabled in its present state, use the next line to enable the filter.
+		// The filter is currently disabled in its present state, replace the marked line with the following line to enable the filter.
 		// if (containsReferencesToLeague(message.content)) {
 
 		// eslint-disable-next-line no-constant-condition
-		if (false) {
+		if (false) { // <-- REPLACE THIS!
 			console.log(`[LOG] ${message.author.tag} triggered a regex filter or has mentioned a role covered by the regex.`);
 
 			await message.client.application.fetch();
