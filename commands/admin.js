@@ -195,7 +195,8 @@ module.exports = {
 			if (interaction.options.getSubcommand() == 'purge') {
 				const messages = interaction.options.getInteger('messages');
 
-				interaction.channel.bulkDelete(messages, {filterOld: true})
+				// +1 is added to the number of messages to include Cypress's confirmation message in the purge.
+				interaction.channel.bulkDelete(messages + 1, {filterOld: true})
 					.then(await interaction.editReply('Deleting messages...'))
 					.catch(err => {
 						console.error(err);
